@@ -38,7 +38,7 @@ const ErrorMessage = ({ props }) => {
 };
 const InputBox = (props) => {
   return (
-    <div className="p-[0.7em] m inline-block mt-0 mb-0 mr-12 ml-8">
+    <div className="p-[0.7em]  mt-0 mb-0 mr-12 ml-8">
       <Name props={props} />
       <InputSection props={props} />
       {props.msg && props.msg !== "" && (

@@ -9,6 +9,8 @@ module.exports = {
     "./src/components/Image.js",
     "./src/pages/Home.js",
     "./src/components/containers/NewItem.js",
+    "./src/components/LogInInputs.js",
+    "./src/pages/LogIn.js",
   ],
   theme: {
     extend: {

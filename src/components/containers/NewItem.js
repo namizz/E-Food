@@ -2,7 +2,7 @@ import React from "react";
 import InputBox from "../AddItem";
 import Image from "../Image";
 
-const NewItem = () => {
+const NewItem = ({ display }) => {
   const [Info, setInfo] = React.useState({
     name: "",
     price: "",
@@ -23,6 +23,13 @@ const NewItem = () => {
       [name]: value,
     }));
   };
+  const AddButton = () => {
+    return (
+      <button className="text-white text-[1em] bg-[#2c2c5a] py-[0.7em] px-[2em] rounded-xl hover:bg-[#393974]">
+        ADD
+      </button>
+    );
+  };
   //   const setImgUrlInInfo = (url) => {
   //     setInfo((prev) => ({
   //       ...prev,
@@ -30,7 +37,14 @@ const NewItem = () => {
   //     }));
   //   };
   return (
-    <div className="bg-slate-200 flex">
+    <div
+      className={`flex-col transform opacity-0 transition-all duration-500 ease-in-out ${
+        display === "block"
+          ? "opacity-100 scale-100"
+          : "opacity-0 scale-95 pointer-events-none"
+      }`}
+      style={{ display: display }}
+    >
       <InputBox
         name="name"
         p="Item Name"
@@ -53,6 +67,7 @@ const NewItem = () => {
         display={required.de}
       />
       <Image />
+      <AddButton />
     </div>
   );
 };

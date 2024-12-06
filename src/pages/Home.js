@@ -2,6 +2,7 @@ import ItemCard from "../components/ItemCard";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import NewItem from "../components/containers/NewItem";
+import React from "react";
 
 const Items = () => {
   return (
@@ -18,12 +19,17 @@ const Items = () => {
 };
 
 const Home = () => {
+  const [addDisplay, setDisplay] = React.useState("none");
+  const changeDisplay = () => {
+    console.log("clicked new item");
+    if (addDisplay === "none") setDisplay("block");
+    else setDisplay("none");
+  };
   return (
     <div>
       <Header />
-      <NavBar />
-      <NewItem />
-
+      <NavBar changeDisplay={changeDisplay} />
+      <NewItem display={addDisplay} />
       <Items />
     </div>
   );
