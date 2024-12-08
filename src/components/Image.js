@@ -17,13 +17,13 @@ const Image = () => {
     }
   };
   return (
-    <div onClick={handleClick}>
+    <div className="p-[0.7em]  mt-0 mb-0 mr-12 ml-10" onClick={handleClick}>
+      <div className="text-sm text-gray-700 font-[600]">Upload image here</div>
       <img
         src="https://img.freepik.com/premium-vector/illustration-upload_498740-5719.jpg"
         alt="upload"
-        className="w-20"
+        className="w-20 ml-6"
       />
-      <div>Click to upload image</div>
 
       <input
         id="file"

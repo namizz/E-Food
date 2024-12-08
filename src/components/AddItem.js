@@ -16,7 +16,7 @@ const InputSection = ({ props }) => {
             : "border-red-800 border-opacity-20"
           : null
       }  text-card-blue focus:outline-none ${
-        props.value && "focus:border-blue-500 "
+        props.value && "focus:border-[#2a7e275e] "
       } `}
       type={props.type || "text"}
       //  id={`${props.name}Text`}
@@ -24,6 +24,21 @@ const InputSection = ({ props }) => {
       value={props.value}
       onChange={props.change}
     />
+  );
+};
+const TextArea = ({ props }) => {
+  return (
+    <textarea
+      className={`p-2.5 pb-3.5 pl-2 text-sm bg-transparent border-b border-gray-300 ${
+        props.display && !props.value
+          ? props.display !== "none"
+            ? "border-red-600"
+            : "border-red-800 border-opacity-20"
+          : null
+      }  text-card-blue focus:outline-none ${
+        props.value && "focus:border-[#2a7e275e]"
+      } `}
+    ></textarea>
   );
 };
 const ErrorMessage = ({ props }) => {
@@ -40,7 +55,13 @@ const InputBox = (props) => {
   return (
     <div className="p-[0.7em]  mt-0 mb-0 mr-12 ml-8">
       <Name props={props} />
-      <InputSection props={props} />
+      {props.type === "textbox" ? (
+        <TextArea props={props} />
+      ) : (
+        <InputSection props={props} />
+      )}
+      <ErrorMessage props={props} />
+      {/* Dynamic error message */}
       {props.msg && props.msg !== "" && (
         <p className="text-xs text-red-500 mt-1">{props.msg}</p>
       )}

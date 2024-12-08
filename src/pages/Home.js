@@ -11,7 +11,8 @@ const Items = () => {
         Items
       </p>
       <hr className="relative bottom-1 h-[4px] bg-[#FF8E32]" />
-      <div className="border-t-2 border-b-2 border-[#FF8E32] py-4 rounded-xl">
+      <div className="border-t-2 border-b-2 border-[#FF8E32] py-4 rounded-xl flex">
+        <ItemCard />
         <ItemCard />
       </div>
     </div>
