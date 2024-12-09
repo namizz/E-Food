@@ -18,6 +18,27 @@ const Items = () => {
     </div>
   );
 };
+const BackgroundImg2 = () => {
+  return (
+    <div className="absolute z-[-10] opacity-10 w-full ">
+      <img
+        className="h-[100vh] w-full object-fill"
+        src="https://i.pinimg.com/736x/f5/d9/f8/f5d9f8c8c418b21f002c51bbff5823fa.jpg"
+      />
+    </div>
+  );
+};
+
+const BackgroundImg = () => {
+  return (
+    <div className="absolute z-[-10] opacity-75 w-full ">
+      <img
+        className="h-[100vh] w-full object-cover"
+        src="https://i.pinimg.com/736x/d2/a7/b8/d2a7b8e3626b849ed5b81e58625cae4d.jpg"
+      />
+    </div>
+  );
+};
 
 const Home = () => {
   const [addDisplay, setDisplay] = React.useState("none");
@@ -29,6 +50,8 @@ const Home = () => {
   return (
     <div>
       <Header />
+      <BackgroundImg />
+      <BackgroundImg2 />
       <NavBar changeDisplay={changeDisplay} />
       <NewItem display={addDisplay} />
       <Items />
