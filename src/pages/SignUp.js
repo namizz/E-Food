@@ -1,33 +1,58 @@
 import Input from "../components/LogInInputs";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../api/API";
+
 const SinUpForm = () => {
   const navigate = useNavigate();
   const [Info, setInfo] = useState({
     name: "",
-    phone: "",
+    phoneNumber: "",
     password: "",
+    confirmPassword: "",
   });
+  const [error, setError] = useState("");
 
   // Navigate to createUser route if user is new
   const LogIn = () => {
-    return navigate("/login");
+    return navigate("/");
   };
-  const handleChange = (e) => {};
-  //   const handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     if (name === "phone") {
-  //       setPhone(value);
-  //     } else if (name === "password") {
-  //       setPassword(value);
-  //     }
-  //   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInfo((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // Clear previous errors
+
+    // Basic validation
+    if (Info.password !== Info.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    if (
+      !Info.name ||
+      !Info.phoneNumber ||
+      !Info.password ||
+      !Info.confirmPassword
+    ) {
+      setError("All fields are required");
+      return;
+    }
+    try {
+      const { confirmPassword, ...Information } = Info;
+      const result = await signup(Information);
+      navigate("/");
+    } catch (err) {
+      setError(err.message || "Failed to sign up");
+    }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen">
       <form
         className="flex flex-col items-center bg-gray-800 bg-opacity-30 backdrop-blur-sm p-8 rounded-lg w-full max-w-sm"
-        //onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <p className="text-[#2f678d] text-4xl mb-12 font-bold font-jolly-lodger">
           E-Food SignUp
@@ -40,8 +65,8 @@ const SinUpForm = () => {
         />
         <Input
           msg="Phone Number (e.g 0991065050)"
-          name="phone"
-          value={Info.phone}
+          name="phoneNumber"
+          value={Info.phoneNumber}
           onChange={handleChange}
         />
         <Input
@@ -54,8 +79,8 @@ const SinUpForm = () => {
         <Input
           msg="Confirm password"
           type="password"
-          name="password"
-          value={Info.password}
+          name="confirmPassword"
+          value={Info.confirmPassword}
           onChange={handleChange}
         />
 

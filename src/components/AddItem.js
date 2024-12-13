@@ -37,10 +37,14 @@ const TextArea = ({ props }) => {
           : null
       }  text-card-blue focus:outline-none ${
         props.value && "focus:border-[#2a7e275e]"
-      } `}
+      }`}
+      name={props.name} // Add the name prop
+      value={props.value} // Bind the value prop
+      onChange={props.change} // Add the change handler
     ></textarea>
   );
 };
+
 const ErrorMessage = ({ props }) => {
   return (
     <p

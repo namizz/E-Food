@@ -1,8 +1,10 @@
+import React, { useState, useEffect } from "react";
 import ItemCard from "../components/ItemCard";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import NewItem from "../components/containers/NewItem";
-import React from "react";
+import { useUser } from "../content/UserContent"; // Assuming this is your user context or state management
+import { PersonInfo } from "../api/API"; // Assuming this is your API call
 
 const Items = () => {
   return (
@@ -18,9 +20,10 @@ const Items = () => {
     </div>
   );
 };
+
 const BackgroundImg2 = () => {
   return (
-    <div className="absolute z-[-10] opacity-10 w-full ">
+    <div className="absolute z-[-10] opacity-10 w-full">
       <img
         className="h-[100vh] w-full object-fill"
         src="https://i.pinimg.com/736x/f5/d9/f8/f5d9f8c8c418b21f002c51bbff5823fa.jpg"
@@ -31,7 +34,7 @@ const BackgroundImg2 = () => {
 
 const BackgroundImg = () => {
   return (
-    <div className="absolute z-[-10] opacity-75 w-full ">
+    <div className="absolute z-[-10] opacity-75 w-full">
       <img
         className="h-[100vh] w-full object-cover"
         src="https://i.pinimg.com/736x/d2/a7/b8/d2a7b8e3626b849ed5b81e58625cae4d.jpg"
@@ -40,13 +43,25 @@ const BackgroundImg = () => {
   );
 };
 
+const UserData = async () => {
+  try {
+    const userData = await PersonInfo(); // Assuming PersonInfo is a function returning a promise
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+  }
+};
+
 const Home = () => {
-  const [addDisplay, setDisplay] = React.useState("none");
+  const { user } = useUser(); // Assuming useUser gives you the user info from context or state
+  const [userInfo, setUserInfo] = useState(null);
+  const [addDisplay, setDisplay] = useState("none");
+  UserData();
+
   const changeDisplay = () => {
     console.log("clicked new item");
-    if (addDisplay === "none") setDisplay("block");
-    else setDisplay("none");
+    setDisplay((prevDisplay) => (prevDisplay === "none" ? "block" : "none"));
   };
+
   return (
     <div>
       <Header />
@@ -55,6 +70,17 @@ const Home = () => {
       <NavBar changeDisplay={changeDisplay} />
       <NewItem display={addDisplay} />
       <Items />
+
+      {/* Display user info if it's available */}
+      {userInfo ? (
+        <div className="user-info">
+          <p>Name: {userInfo.name}</p>
+          <p>Phone Number: {userInfo.phoneNumber}</p>
+          <p>Role: {userInfo.role}</p>
+        </div>
+      ) : (
+        <p>Loading user info...</p>
+      )}
     </div>
   );
 };

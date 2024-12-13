@@ -1,22 +1,48 @@
 import Input from "../components/LogInInputs";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../api/API";
+import { PersonInfo } from "../api/API";
+
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState(null);
+  const [Info, setInfo] = useState({
+    phoneNumber: "",
+    password: "",
+  });
   const [error, setError] = useState(""); // To store error message if login fails
 
   // Navigate to createUser route if user is new
   const SignUp = () => {
     return navigate("/signup");
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "phone") {
-      setPhone(value);
-    } else if (name === "password") {
-      setPassword(value);
+    setInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { phoneNumber, password } = Info;
+
+    if (!phoneNumber || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    try {
+      const result = await login(Info);
+
+      console.log(result); // Log the result of the login attempt
+
+      // Redirect to home page
+      navigate("/");
+    } catch (error) {
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -24,22 +50,22 @@ const LoginForm = () => {
     <div className="flex justify-center items-center min-h-screen">
       <form
         className="flex flex-col items-center bg-gray-800 bg-opacity-30 backdrop-blur-sm p-8 rounded-lg w-full max-w-sm"
-        //onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <p className="text-[#2f678d] text-4xl mb-12 font-bold font-jolly-lodger">
           E-Food LogIn
         </p>
         <Input
           msg="Phone Number (e.g 0991065050)"
-          name="phone"
-          value={phone}
+          name="phoneNumber"
+          value={Info.phoneNumber}
           onChange={handleChange}
         />
         <Input
           msg="Password"
           type="password"
           name="password"
-          value={password}
+          value={Info.password}
           onChange={handleChange}
         />
 
@@ -58,7 +84,7 @@ const LoginForm = () => {
           className="text-[#f3e17ade] bg-slate-600 p-1 px-4 rounded-xl bg-opacity-35 mt-6 hover:text-green-200 hover:bg-opacity-80 hover:bg-slate-800 transition-all duration-100"
           onClick={SignUp}
         >
-          Sig Up
+          Sign Up
         </div>
       </form>
     </div>
@@ -70,7 +96,7 @@ const LoginPage = () => {
     <div
       className="w-full h-screen bg-cover bg-center backdrop-blur-2xl"
       style={{
-        backgroundImage: `url('https://t3.ftcdn.net/jpg/05/66/28/54/360_F_566285463_VqhNEzBvrNPqUXfskGRdONrNYMaNdXkp.jpg')`,
+        backgroundImage: `url('https://i.pinimg.com/736x/e1/5e/03/e15e033731d2da74297cc50cb126f33e.jpg')`,
       }}
     >
       <LoginForm />

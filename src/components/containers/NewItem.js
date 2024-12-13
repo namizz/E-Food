@@ -1,22 +1,20 @@
 import React from "react";
 import InputBox from "../AddItem";
 import Image from "../Image";
+import { AddFood } from "../../api/API";
 
-//Info data that are going to be posted
 const NewItem = ({ display }) => {
   const [Info, setInfo] = React.useState({
     name: "",
     price: "",
     description: "",
-    img: "",
   });
+  const [image, setImage] = React.useState(null);
 
-  //required filled
   const [required, setRequirement] = React.useState({
     na: "none",
     pr: "none",
     de: "none",
-    im: "none",
   });
 
   const handleChange = (e) => {
@@ -26,6 +24,7 @@ const NewItem = ({ display }) => {
       [name]: value,
     }));
   };
+
   const AddButton = ({ onClick }) => {
     return (
       <button
@@ -36,6 +35,7 @@ const NewItem = ({ display }) => {
       </button>
     );
   };
+
   const requiredUnfilled = () => {
     let isValid = true;
     const updateRequirement = { ...required };
@@ -58,19 +58,32 @@ const NewItem = ({ display }) => {
     setRequirement(updateRequirement);
     return isValid; // Return form validity
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if the required fields are filled
     if (requiredUnfilled()) {
-      console.log("POST REQUEST", Info);
-    } else console.log(Info, required);
+      const formData = new FormData();
+      formData.append("name", Info.name); // Add name field
+      formData.append("price", Info.price); // Add price field
+      formData.append("description", Info.description); // Add description field
+      formData.append("quantity", 1); // Set quantity field (you can adjust this based on your needs)
+
+      if (image) {
+        formData.append("image", image); // Add image file field
+      }
+
+      console.log("FormData being sent:", formData);
+
+      try {
+        const result = await AddFood(formData); // Send the formData to the backend
+        console.log(result);
+      } catch (error) {
+        console.error("Error while posting food:", error);
+      }
+    }
   };
-  //   const setImgUrlInInfo = (url) => {
-  //     setInfo((prev) => ({
-  //       ...prev,
-  //       img: url,
-  //     }));
-  //   };
+
   return (
     <div
       className="flex-col w-[40%] ml-[20%] border-t-2 border-[#358f6c69] mb-6 pb-2 rounded-3xl rounded-tl-none bg-[#8f971d07]"
@@ -101,7 +114,10 @@ const NewItem = ({ display }) => {
           change={handleChange}
           display={required.de}
         />
-        <Image />
+        <Image setImage={setImage} />
+        {image && (
+          <img src={image} alt="Uploaded" className="mt-4 max-w-full" />
+        )}
       </div>
       <div className="w-full mx-12">
         <AddButton onClick={handleSubmit} />
