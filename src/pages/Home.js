@@ -4,7 +4,8 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import NewItem from "../components/containers/NewItem";
 import { useUser } from "../content/UserContent"; // Assuming this is your user context or state management
-import { PersonInfo } from "../api/API"; // Assuming this is your API call
+import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
+import ItemsBox from "../components/containers/ItemBox";
 
 const Items = () => {
   return (
@@ -14,8 +15,7 @@ const Items = () => {
       </p>
       <hr className="relative bottom-1 h-[4px] bg-[#FF8E32]" />
       <div className="border-t-2 border-b-2 border-[#FF8E32] py-4 rounded-xl flex">
-        <ItemCard />
-        <ItemCard />
+        <ItemsBox />
       </div>
     </div>
   );
@@ -43,19 +43,31 @@ const BackgroundImg = () => {
   );
 };
 
-const UserData = async () => {
-  try {
-    const userData = await PersonInfo(); // Assuming PersonInfo is a function returning a promise
-  } catch (error) {
-    console.error("Error fetching user info:", error);
-  }
-};
-
 const Home = () => {
   const { user } = useUser(); // Assuming useUser gives you the user info from context or state
   const [userInfo, setUserInfo] = useState(null);
   const [addDisplay, setDisplay] = useState("none");
-  UserData();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await PersonInfo();
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchFood = async () => {
+      try {
+        console.log(await getFood());
+      } catch (error) {
+        console.log("Can't fetch food");
+      }
+    };
+    fetchFood();
+  }, []);
 
   const changeDisplay = () => {
     console.log("clicked new item");

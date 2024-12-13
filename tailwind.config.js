@@ -11,6 +11,7 @@ module.exports = {
     "./src/components/containers/NewItem.js",
     "./src/components/LogInInputs.js",
     "./src/pages/LogIn.js",
+    "./src/components/containers/ItemBox.js",
   ],
   theme: {
     extend: {

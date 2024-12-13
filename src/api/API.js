@@ -56,8 +56,7 @@ export const PersonInfo = async () => {
       }
     );
 
-    console.log("Response status:", response.status);
-    console.log("Response body:", await response.text()); // Log raw response to check if it's a JSON response
+    console.log("Response status:", response.ok);
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -75,9 +74,10 @@ export const PersonInfo = async () => {
 
 export const AddFood = async (formData) => {
   try {
-    const response = await fetch("https://efood-brvf.onrender.com/api/", {
+    const response = await fetch("https://efood-brvf.onrender.com/api/foods", {
       method: "POST",
       body: formData, // Send formData directly
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -89,6 +89,26 @@ export const AddFood = async (formData) => {
     return data;
   } catch (error) {
     console.error("Failed to add Info", error);
+    throw error;
+  }
+};
+
+export const getFood = async () => {
+  try {
+    const response = await fetch("https://efood-brvf.onrender.com/api/foods", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to get all food");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
     throw error;
   }
 };

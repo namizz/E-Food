@@ -10,6 +10,7 @@ const NewItem = ({ display }) => {
     description: "",
   });
   const [image, setImage] = React.useState(null);
+  const [url, setURL] = React.useState(null);
 
   const [required, setRequirement] = React.useState({
     na: "none",
@@ -71,6 +72,7 @@ const NewItem = ({ display }) => {
 
       if (image) {
         formData.append("image", image); // Add image file field
+        console.log(URL.createObjectURL(image));
       }
 
       console.log("FormData being sent:", formData);
@@ -78,6 +80,7 @@ const NewItem = ({ display }) => {
       try {
         const result = await AddFood(formData); // Send the formData to the backend
         console.log(result);
+        window.location.reload();
       } catch (error) {
         console.error("Error while posting food:", error);
       }
@@ -114,9 +117,13 @@ const NewItem = ({ display }) => {
           change={handleChange}
           display={required.de}
         />
-        <Image setImage={setImage} />
-        {image && (
-          <img src={image} alt="Uploaded" className="mt-4 max-w-full" />
+        <Image setImage={setImage} setURL={setURL} />
+        {url && (
+          <img
+            src={url}
+            alt="Uploaded"
+            className="mt-4 ml-[-4em] max-w-full w-40 h-40 rounded-2xl"
+          />
         )}
       </div>
       <div className="w-full mx-12">
