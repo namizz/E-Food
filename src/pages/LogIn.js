@@ -2,7 +2,6 @@ import Input from "../components/LogInInputs";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/API";
-import { PersonInfo } from "../api/API";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -10,11 +9,40 @@ const LoginForm = () => {
     phoneNumber: "",
     password: "",
   });
+  const [load, setLoad] = useState(false);
   const [error, setError] = useState(""); // To store error message if login fails
 
   // Navigate to createUser route if user is new
   const SignUp = () => {
     return navigate("/signup");
+  };
+
+  const LogInButton = () => {
+    return (
+      <button
+        type="submit"
+        disabled={load} // Disable the button when loading
+        className={`${
+          !load
+            ? "bg-gradient-to-br from-[#ffef93] to-[#fcb045]"
+            : "bg-gradient-to-br from-[#ffae52] to-[#ff9822]"
+        }  text-blue-800 py-3 w-80 rounded-lg mt-8 text-lg font-medium ${
+          !load ? "hover:from-[#fff176] hover:to-[#ffd54f]" : ""
+        } transition-all duration-600 `}
+      >
+        {!load ? "Login" : "Logging in..."}
+      </button>
+    );
+  };
+  const SignUpButton = () => {
+    return (
+      <div
+        className="text-[#f3e17ade] bg-slate-600 p-1 px-4 rounded-xl bg-opacity-35 mt-6 hover:text-green-200 hover:bg-opacity-80 hover:bg-slate-800 transition-all duration-100"
+        onClick={!load ? SignUp : null}
+      >
+        Sign Up
+      </div>
+    );
   };
 
   const handleChange = (e) => {
@@ -27,10 +55,12 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoad(true);
     const { phoneNumber, password } = Info;
 
     if (!phoneNumber || !password) {
       setError("All fields are required");
+      setLoad(false); // Reset loading state
       return;
     }
 
@@ -39,11 +69,12 @@ const LoginForm = () => {
 
       console.log(result); // Log the result of the login attempt
 
-      // Redirect to home page
+      // Redirect to home page on success
       navigate("/");
     } catch (error) {
       setError("Login failed. Please try again.");
     }
+    setLoad(false); // Reset loading state
   };
 
   return (
@@ -73,19 +104,9 @@ const LoginForm = () => {
           <p className="text-red-500 text-sm text-center mb-4">{error}</p>
         )}
 
-        <button
-          type="submit"
-          className="bg-gradient-to-br from-[#ffef93] to-[#fcb045] text-blue-800 py-3 w-80 rounded-lg mt-8 text-lg font-medium  hover:from-[#fff176] hover:to-[#ffd54f] transition-all duration-600 "
-        >
-          Login
-        </button>
+        <LogInButton />
 
-        <div
-          className="text-[#f3e17ade] bg-slate-600 p-1 px-4 rounded-xl bg-opacity-35 mt-6 hover:text-green-200 hover:bg-opacity-80 hover:bg-slate-800 transition-all duration-100"
-          onClick={SignUp}
-        >
-          Sign Up
-        </div>
+        <SignUpButton />
       </form>
     </div>
   );

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../api/API";
 
-const SinUpForm = () => {
+const SignUpForm = () => {
   const navigate = useNavigate();
   const [Info, setInfo] = useState({
     name: "",
@@ -11,25 +11,59 @@ const SinUpForm = () => {
     password: "",
     confirmPassword: "",
   });
+  const [load, setLoad] = useState(false); // Loading state for the Sign-Up button
   const [error, setError] = useState("");
 
-  // Navigate to createUser route if user is new
   const LogIn = () => {
     return navigate("/");
   };
+
+  const SignUpButton = () => {
+    return (
+      <button
+        type="submit"
+        disabled={load} // Disable the button when loading
+        className={`${
+          !load
+            ? "bg-gradient-to-br from-[#ffef93] to-[#fcb045]"
+            : "bg-gradient-to-br from-[#ffae52] to-[#ff9822]"
+        }  text-blue-800 py-3 w-80 rounded-lg mt-8 text-lg font-medium ${
+          !load ? "hover:from-[#fff176] hover:to-[#ffd54f]" : ""
+        } transition-all duration-600 `}
+      >
+        {!load ? "Sign Up" : "Signing up..."}
+      </button>
+    );
+  };
+
+  const LogInButton = () => {
+    return (
+      <div
+        className="text-[#f3e17ade] bg-slate-600 p-1 px-4 rounded-xl bg-opacity-35 mt-6 hover:text-green-200 hover:bg-opacity-80 hover:bg-slate-800 transition-all duration-100"
+        onClick={!load ? LogIn : null} // Disable navigation when loading
+      >
+        Log In
+      </div>
+    );
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Clear previous errors
+    setLoad(true); // Set loading state
 
     // Basic validation
     if (Info.password !== Info.confirmPassword) {
       setError("Passwords do not match");
+      setLoad(false); // Reset loading state
       return;
     }
+
     if (
       !Info.name ||
       !Info.phoneNumber ||
@@ -37,15 +71,20 @@ const SinUpForm = () => {
       !Info.confirmPassword
     ) {
       setError("All fields are required");
+      setLoad(false); // Reset loading state
       return;
     }
+
     try {
-      const { confirmPassword, ...Information } = Info;
+      const { confirmPassword, ...Information } = Info; // Exclude confirmPassword from the data sent to the API
       const result = await signup(Information);
-      navigate("/");
+      console.log(result); // Log the result for debugging
+      navigate("/"); // Navigate to the login page on success
     } catch (err) {
       setError(err.message || "Failed to sign up");
     }
+
+    setLoad(false); // Reset loading state
   };
 
   return (
@@ -84,25 +123,19 @@ const SinUpForm = () => {
           onChange={handleChange}
         />
 
-        <button
-          type="submit"
-          className="bg-gradient-to-br from-[#ffef93] to-[#fcb045] text-blue-800 py-3 w-80 rounded-lg mt-8 text-lg font-medium  hover:from-[#fff176] hover:to-[#ffd54f] transition-all duration-600 "
-        >
-          Sign Up
-        </button>
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+        )}
 
-        <div
-          className="text-[#f3e17ade] bg-slate-600 p-1 px-4 rounded-xl bg-opacity-35 mt-6 hover:text-green-200 hover:bg-opacity-80 hover:bg-slate-800 transition-all duration-100"
-          onClick={LogIn}
-        >
-          Log In
-        </div>
+        <SignUpButton />
+
+        <LogInButton />
       </form>
     </div>
   );
 };
 
-const SinUpPage = () => {
+const SignUpPage = () => {
   return (
     <div
       className="w-full h-screen bg-cover bg-center backdrop-blur-2xl"
@@ -110,9 +143,9 @@ const SinUpPage = () => {
         backgroundImage: `url('https://t3.ftcdn.net/jpg/05/66/28/54/360_F_566285463_VqhNEzBvrNPqUXfskGRdONrNYMaNdXkp.jpg')`,
       }}
     >
-      <SinUpForm />
+      <SignUpForm />
     </div>
   );
 };
 
-export default SinUpPage;
+export default SignUpPage;
