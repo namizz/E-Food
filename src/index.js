@@ -4,6 +4,7 @@ import "./index.css";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LogIn";
 import SinUpPage from "./pages/SignUp";
+import Order from "./pages/Order";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./content/UserContent";
 
