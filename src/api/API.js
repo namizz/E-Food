@@ -22,7 +22,6 @@ export const signup = async (Info) => {
   }
 };
 export const login = async (Info) => {
-  console.log(JSON.stringify(Info));
   try {
     const response = await fetch("https://efood-brvf.onrender.com/auth/login", {
       headers: {
@@ -55,8 +54,6 @@ export const PersonInfo = async () => {
         credentials: "include",
       }
     );
-
-    console.log("Response status:", response.ok);
 
     if (!response.ok) {
       const errorData = await response.json();

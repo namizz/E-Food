@@ -1,3 +1,5 @@
+import { useUser } from "../content/UserContent";
+
 const Name = ({ name }) => {
   return (
     <div className="bg-gradient-to-br from-[#ffae6d] to-[#f87f1c] p-1 text-white text-h3 px-5 font-semibold">
@@ -43,15 +45,36 @@ const Order = () => {
     </button>
   );
 };
-
-const Item = (props) => {
+const Available = () => {
   return (
-    <div className="w-cardL relative m-2 mx-4 rounded-t-3xl">
+    <button className="px-3 bg-gradient-to-br text-green-500 text-h4 rounded-r-xl rounded-bl-xl py-1 shadow-sm">
+      <span className="text-h5">🟢</span> Available Now
+    </button>
+  );
+};
+const EditButton = () => {
+  return (
+    <div className="w-8 h-8 border-2 border-red-300 absolute right-[5%]"></div>
+  );
+};
+const Item = (props) => {
+  const { setSelected } = props;
+  const { user } = useUser();
+  const role = user.role || "";
+  return (
+    <div
+      className="w-cardL relative m-2 mx-4 rounded-3xl"
+      onClick={() => {
+        setSelected(null);
+        setSelected(props);
+      }}
+    >
+      <EditButton />
       <Image image={props.src} />
       <div className="relative">
         <Name name={props.name} />
         <Desciption description={props.description} />
-        <Order />
+        {role !== "ROLE_ADMIN" ? <Order /> : <Available />}
         <Price price={props.price} />
       </div>
     </div>

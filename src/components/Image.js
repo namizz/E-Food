@@ -21,7 +21,6 @@ const Image = ({ setImage, setURL }) => {
       console.log("Image", objectURL);
     }
   };
-  console.log(imageurl);
 
   return (
     <div className="p-[0.7em] mt-0 mb-0 mr-12 ml-10" onClick={handleClick}>

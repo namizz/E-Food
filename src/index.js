@@ -14,6 +14,7 @@ ReactDOM.render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SinUpPage />} />
+        <Route path="/order" element={<div>hello world</div>} />
       </Routes>
     </UserProvider>
   </BrowserRouter>,

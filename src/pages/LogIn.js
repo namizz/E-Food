@@ -60,21 +60,17 @@ const LoginForm = () => {
 
     if (!phoneNumber || !password) {
       setError("All fields are required");
-      setLoad(false); // Reset loading state
+      setLoad(false);
       return;
     }
 
     try {
-      const result = await login(Info);
-
-      console.log(result); // Log the result of the login attempt
-
-      // Redirect to home page on success
+      await login(Info);
       navigate("/");
     } catch (error) {
       setError("Login failed. Please try again.");
     }
-    setLoad(false); // Reset loading state
+    setLoad(false);
   };
 
   return (
