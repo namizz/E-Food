@@ -1,5 +1,10 @@
+import OrderCard from "../components/OrderCard";
 const Order = () => {
-  return <div>hello e-food</div>;
+  return (
+    <div>
+      <OrderCard />
+    </div>
+  );
 };
 
 export default Order;

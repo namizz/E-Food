@@ -12,6 +12,7 @@ module.exports = {
     "./src/components/LogInInputs.js",
     "./src/pages/LogIn.js",
     "./src/components/containers/ItemBox.js",
+    "./src/components/OrderCard.js",
   ],
   theme: {
     extend: {
@@ -40,9 +41,11 @@ module.exports = {
         h3: "clamp(10px, 2vw, 23px)",
         h4: "clamp(10px, 1.4vw, 18px)",
         h5: "clamp(10px, 1.1vw, 14px)",
+        hm: "clamp(10px,1.25vw, 16px)",
       },
       backgroundImage: {
         yellowGradient: "linear-gradient(to top-right, #ffd900, #ffdd00)",
+        sent: "linear-gradient(to right, #95F551 0%, #95F551 20%, transparent 20%, #fff 100%)",
       },
     },
   },
