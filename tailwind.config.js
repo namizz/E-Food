@@ -13,6 +13,9 @@ module.exports = {
     "./src/pages/LogIn.js",
     "./src/components/containers/ItemBox.js",
     "./src/components/OrderCard.js",
+    "./src/pages/Order.js",
+    "./src/components/containers/CartBox.js",
+    "./src/components/Cart.js",
   ],
   theme: {
     extend: {

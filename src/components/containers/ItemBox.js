@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getFood } from "../../api/API";
 import ItemCard from "../ItemCard";
 
-const ItemsBox = ({ setSelected }) => {
+const ItemsBox = ({ setSelected, setOrder }) => {
   const [foods, setFoods] = useState([]); // Initialize as an empty array
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,6 +44,7 @@ const ItemsBox = ({ setSelected }) => {
               price={food.price}
               src={food.imageUrl}
               setSelected={setSelected}
+              setOrder={setOrder}
             />
           );
         })

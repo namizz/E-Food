@@ -38,9 +38,16 @@ const Desciption = ({ description }) => {
     </div>
   );
 };
-const Order = () => {
+const Order = ({ setOrder, props }) => {
   return (
-    <button className="m-auto w-full bg-gradient-to-br from-[#FFAA00] to-[#FF7300] text-white text-h4 rounded-xl py-1">
+    <button
+      className="m-auto w-full bg-gradient-to-br from-[#FFAA00] to-[#FF7300] text-white text-h4 rounded-xl py-1"
+      onClick={(event) => {
+        event.stopPropagation();
+        setOrder(null);
+        setOrder(props);
+      }}
+    >
       Order
     </button>
   );
@@ -58,13 +65,14 @@ const EditButton = () => {
   );
 };
 const Item = (props) => {
-  const { setSelected } = props;
+  const { setSelected, setOrder } = props;
   const { user } = useUser();
-  const role = user.role || "";
+  const role = user.role !== null ? user.role : "";
   return (
     <div
       className="w-cardL relative m-2 mx-4 rounded-3xl"
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         setSelected(null);
         setSelected(props);
       }}
@@ -74,7 +82,11 @@ const Item = (props) => {
       <div className="relative">
         <Name name={props.name} />
         <Desciption description={props.description} />
-        {role !== "ROLE_ADMIN" ? <Order /> : <Available />}
+        {role !== "ROLE_ADMIN" ? (
+          <Order setOrder={setOrder} props={props} />
+        ) : (
+          <Available />
+        )}
         <Price price={props.price} />
       </div>
     </div>

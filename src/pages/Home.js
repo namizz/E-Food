@@ -7,8 +7,9 @@ import { useUser } from "../content/UserContent"; // Assuming this is your user 
 import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
 import ItemsBox from "../components/containers/ItemBox";
 import DisplayItem from "../components/DisplayItem";
+import CartBox from "../components/containers/CartBox";
 
-const Items = ({ setSelected, selected }) => {
+const Items = ({ setSelected, selected, setOrder }) => {
   return (
     <div className={`${selected ? "w-[55%]" : "w-[75%] mx-auto"}  border-2`}>
       <p className="border-[4px] border-[#FF8E32] text-h2 text-[#FF7300] font-semibold inline-block px-item rounded-t-3xl">
@@ -16,7 +17,7 @@ const Items = ({ setSelected, selected }) => {
       </p>
       <hr className="relative bottom-1 h-[4px] bg-[#FF8E32]" />
       <div className="border-t-2 border-b-2 border-[#FF8E32] py-4 rounded-xl flex">
-        <ItemsBox setSelected={setSelected} />
+        <ItemsBox setSelected={setSelected} setOrder={setOrder} />
       </div>
     </div>
   );
@@ -59,10 +60,14 @@ const UserInfo = ({ user }) => {
   );
 };
 
-const Body = ({ setSelected, selected }) => {
+const Body = ({ setSelected, selected, setOrder }) => {
   return (
     <div className="flex mx-auto justify-center">
-      <Items setSelected={setSelected} selected={selected} />
+      <Items
+        setSelected={setSelected}
+        selected={selected}
+        setOrder={setOrder}
+      />
       {selected ? (
         <div className="w-[25%] border-2 border-red-300">
           <DisplayItem props={selected} />
@@ -71,42 +76,12 @@ const Body = ({ setSelected, selected }) => {
     </div>
   );
 };
-const Cart = () => {
-  return (
-    <div className="bg-gradient-to-b from-[#FFC99E] to-[#FF7300] border-2 border-white flex h-cart rounded-full">
-      <div className="max-w-[18%] border-[3px] border-white m-1 rounded-full">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe3WVxWxsObZR_aIEK0SPcekOKGaRS1r1eRw&s"
-          className="object-cover rounded-full h-full w-full"
-        />
-      </div>
-      <div className="w-[55%] p-1 text-white">
-        <p className="p-0.5 text-h3">Noodles</p>
-        <div className="text-h5 bg-red-500 w-small rounded-lg text-center m-2 mx-5">
-          cancel
-        </div>
-      </div>
-      <div className="py-[0.4vw]">
-        <div className="flex">
-          <div className="px-3 text-h4 text-red-600 bg-white bg-opacity-60 rounded-lg mr-0.5">
-            –
-          </div>
-          <div className="px-3 text-h4 text-green-600 bg-white bg-opacity-60 rounded-lg">
-            +
-          </div>
-        </div>
-        <div className="m-0.5 p-0.5 text-center text-h4 text-[#ff6943] bg-white bg-opacity-90 rounded-xl">
-          2
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Home = () => {
-  const { user, setUser } = useUser();
-  const [addDisplay, setDisplay] = useState("none");
-  const [selected, setSelected] = useState(null);
+  const { user, setUser } = useUser(); //about user
+  const [addDisplay, setDisplay] = useState("none"); // about new food
+  const [selected, setSelected] = useState(null); // about selected element
+  const [newOrder, setOrder] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -136,19 +111,20 @@ const Home = () => {
   };
 
   return (
-    <div className="">
+    <div
+      className=""
+      onClick={() => {
+        setSelected(null);
+      }}
+    >
       <Header />
       <BackgroundImg />
       <BackgroundImg2 />
       <NavBar changeDisplay={changeDisplay} />
       <NewItem display={addDisplay} />
-      <Body selected={selected} setSelected={setSelected} />
-      <UserInfo user={user} />
-      <div className=" absolute right-0 bottom-0 w-cart">
-        <Cart />
-        <Cart />
-        <Cart />
-      </div>
+      <Body selected={selected} setSelected={setSelected} setOrder={setOrder} />
+      <UserInfo user={user} setOrder={setOrder} />
+      <CartBox newOrder={newOrder} />
     </div>
   );
 };
