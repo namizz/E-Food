@@ -16,6 +16,8 @@ module.exports = {
     "./src/pages/Order.js",
     "./src/components/containers/CartBox.js",
     "./src/components/Cart.js",
+    "./src/components/container/Notification.js",
+    "./src/components/NotificationCard.js",
   ],
   theme: {
     extend: {

@@ -8,6 +8,7 @@ const NewItem = ({ display }) => {
     name: "",
     price: "",
     description: "",
+    quantity: "",
   });
   const [image, setImage] = React.useState(null);
   const [url, setURL] = React.useState(null);
@@ -68,7 +69,10 @@ const NewItem = ({ display }) => {
       formData.append("name", Info.name); // Add name field
       formData.append("price", Info.price); // Add price field
       formData.append("description", Info.description); // Add description field
-      formData.append("quantity", 1); // Set quantity field (you can adjust this based on your needs)
+      formData.append(
+        "quantity",
+        parseInt(Info.quantity) > 1 ? parseInt(Info.quantity) : 0
+      ); // Set quantity field (you can adjust this based on your needs)
 
       if (image) {
         formData.append("image", image); // Add image file field
@@ -87,9 +91,92 @@ const NewItem = ({ display }) => {
     }
   };
 
+  const Templete = () => {
+    return (
+      <div className="p-4">
+        <div className="w-[400px] bg-white">
+          {/* Cart Title */}
+          <div className="w-full h-10 flex items-center px-5 border-b border-gray-200 font-bold text-xs text-gray-600">
+            New Item
+          </div>
+
+          {/* Products Section */}
+          <div className="p-4">
+            <div className="grid grid-cols-[60px_1fr_80px_1fr] gap-3 items-center">
+              {/* Product Image */}
+              <img
+                src={
+                  url ||
+                  "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE="
+                }
+                className="w-16 h-16 object-cover rounded-md"
+              />
+
+              {/* Product Details */}
+              <div>
+                <span className="text-sm font-semibold text-gray-800 block mb-1">
+                  {Info.name || "No name"}
+                </span>
+                <p className="text-xs font-semibold text-gray-500">
+                  {Info.description || "no description"}
+                </p>
+              </div>
+
+              {/* Quantity Controller */}
+              <div className="grid grid-cols-3 items-center bg-white border border-gray-300 rounded-md shadow-sm">
+                <button className="flex items-center justify-center text-gray-800">
+                  <svg
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    height="14"
+                    width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2.5"
+                      stroke="#47484b"
+                      d="M20 12L4 12"
+                    ></path>
+                  </svg>
+                </button>
+                <label className="flex items-center justify-center text-sm font-bold text-gray-800">
+                  {Info.quantity || "0"}
+                </label>
+                <button className="flex items-center justify-center text-gray-800">
+                  <svg
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    height="14"
+                    width="14"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2.5"
+                      stroke="#47484b"
+                      d="M12 4V20M20 12H4"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+
+              {/* Price */}
+              <div className="text-sm font-bold text-gray-800 text-right">
+                ${Info.price || "0"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
-      className="flex-col w-[40%] ml-[20%] border-t-2 border-[#358f6c69] mb-6 pb-2 rounded-3xl rounded-tl-none bg-[#8f971d07]"
+      className="flex-col  mx-[20%] border-t-2 border-[#358f6c69] mb-6 pb-2 rounded-3xl rounded-tl-none bg-[#8f971d07] shadow-lg "
       style={{ display: display }}
     >
       <div className="flex">
@@ -122,10 +209,19 @@ const NewItem = ({ display }) => {
           <img
             src={url}
             alt="Uploaded"
-            className="mt-4 ml-[-4em] max-w-full w-40 h-40 rounded-2xl"
+            className="mt-4 ml-[-4em] max-w-full w-40 h-40 rounded-2xl object-cover"
           />
         )}
       </div>
+      <div>
+        <InputBox
+          name="quantity"
+          p="Quantity"
+          value={Info.quantity}
+          change={handleChange}
+        />
+      </div>
+      <Templete />
       <div className="w-full mx-12">
         <AddButton onClick={handleSubmit} />
       </div>

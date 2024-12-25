@@ -1,5 +1,6 @@
 import Cart from "../Cart";
 import React, { useState, useEffect } from "react";
+import { orderFood } from "../../api/API";
 
 const CartBox = ({ newOrder }) => {
   const [OrderCart, appendCarts] = useState([]);
@@ -38,6 +39,7 @@ const CartBox = ({ newOrder }) => {
       }
     }
   }, [newOrder]);
+
   const updateQuantity = (id, type) => {
     const map = hashmap.current;
     if (map.has(id)) {
@@ -51,16 +53,44 @@ const CartBox = ({ newOrder }) => {
       );
     }
   };
+
   const PlaceOrder = () => {
+    const orderjson = () => {
+      const arr = [];
+      const map = hashmap.current;
+      for (const [key, value] of map.entries()) {
+        arr.push({ foodId: key, quantity: value });
+      }
+      console.log(arr);
+      return arr;
+    };
+
+    const handlePlaceOrder = async () => {
+      try {
+        const orderData = orderjson();
+        await orderFood(orderData);
+        console.log("Order placed successfully!");
+        // Optionally, you can clear the state or show a success message here
+        hashmap.current.clear();
+        appendCarts([]);
+      } catch (error) {
+        console.error("Error placing order:", error);
+      }
+    };
+
     return newOrder ? (
       <div
-        className="bg-orange-400 text-h3 text-center"
-        onClick={() => {
-          console.log(hashmap);
-        }}
+        className="bg-gradient-to-r from-[#ff8441] to-[#ff9d00] text-h3 px-9 py-2 text-center text-white rounded-2xl cursor-pointer"
+        onClick={handlePlaceOrder}
       >
         PlaceOrder
       </div>
+    ) : null;
+  };
+
+  const Cancel = () => {
+    return newOrder ? (
+      <div className="text-red-500 text-h3 text-center px-2 py-2">cancel</div>
     ) : null;
   };
 
@@ -78,7 +108,10 @@ const CartBox = ({ newOrder }) => {
           />
         ))}
       </div>
-      <PlaceOrder />
+      <div className="flex justify-evenly mt-4">
+        <PlaceOrder />
+        <Cancel />
+      </div>
     </div>
   );
 };

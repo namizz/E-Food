@@ -8,6 +8,7 @@ import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API c
 import ItemsBox from "../components/containers/ItemBox";
 import DisplayItem from "../components/DisplayItem";
 import CartBox from "../components/containers/CartBox";
+import Notifications from "../components/containers/Notification";
 
 const Items = ({ setSelected, selected, setOrder }) => {
   return (
@@ -44,6 +45,7 @@ const BackgroundImg = () => {
     </div>
   );
 };
+
 const UserInfo = ({ user }) => {
   return (
     <div>
@@ -78,10 +80,11 @@ const Body = ({ setSelected, selected, setOrder }) => {
 };
 
 const Home = () => {
-  const { user, setUser } = useUser(); //about user
-  const [addDisplay, setDisplay] = useState("none"); // about new food
-  const [selected, setSelected] = useState(null); // about selected element
+  const { user, setUser } = useUser(); // About user
+  const [addDisplay, setDisplay] = useState("none"); // About new food
+  const [selected, setSelected] = useState(null); // About selected element
   const [newOrder, setOrder] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -110,6 +113,11 @@ const Home = () => {
     setDisplay((prevDisplay) => (prevDisplay === "none" ? "block" : "none"));
   };
 
+  // Ensure `user` is loaded and `user.role` is available before rendering the component
+  if (!user) {
+    return <p>Loading...</p>; // Optionally, show a loading spinner here
+  }
+
   return (
     <div
       className=""
@@ -121,6 +129,8 @@ const Home = () => {
       <BackgroundImg />
       <BackgroundImg2 />
       <NavBar changeDisplay={changeDisplay} />
+      {/* Only render Notifications if user is loaded and has the role */}
+      {user.role && user.role === "ROLE_ADMIN" ? <Notifications /> : ""}
       <NewItem display={addDisplay} />
       <Body selected={selected} setSelected={setSelected} setOrder={setOrder} />
       <UserInfo user={user} setOrder={setOrder} />

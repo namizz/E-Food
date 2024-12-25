@@ -109,3 +109,91 @@ export const getFood = async () => {
     throw error;
   }
 };
+export const orderFood = async (arr) => {
+  const url = "https://efood-brvf.onrender.com/api/orders";
+
+  try {
+    // Wrapping `arr` into the required structure
+    const payload = {
+      orderItems: arr, // Assuming `arr` is the list of order items
+    };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload), // Convert object to JSON string
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      // Handle HTTP errors
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Something went wrong");
+    }
+
+    const data = await response.json();
+    console.log("Order placed successfully:", data);
+    return data;
+  } catch (error) {
+    console.error("Error placing the order:", error.message);
+    throw error;
+  }
+};
+
+// export const orderFood = async (arr) => {
+//   const wsUrl = "wss://efood-brvf.onrender.com/api/orders"; // WebSocket URL
+
+//   // Check WebSocket compatibility
+//   if (!window.WebSocket) {
+//     throw new Error("WebSocket is not supported in this browser.");
+//   }
+
+//   return new Promise((resolve, reject) => {
+//     const socket = new WebSocket(wsUrl);
+
+//     // Open WebSocket connection
+//     socket.onopen = () => {
+//       console.log("WebSocket connection established.");
+//       try {
+//         // Send the data as a JSON string
+//         const dataToSend = JSON.stringify(arr);
+//         socket.send(dataToSend);
+//         console.log("Data sent:", dataToSend);
+//       } catch (error) {
+//         reject(`Error sending data: ${error.message}`);
+//       }
+//     };
+
+//     // Handle messages from the server
+//     socket.onmessage = (event) => {
+//       console.log("Message received from server:", event.data);
+//       try {
+//         const response = JSON.parse(event.data);
+//         resolve(response);
+//       } catch (error) {
+//         reject(`Error parsing server response: ${error.message}`);
+//       } finally {
+//         socket.close(); // Close connection after receiving a response
+//       }
+//     };
+
+//     // Handle WebSocket errors
+//     socket.onerror = (error) => {
+//       console.error("WebSocket error:", error);
+//       reject(`WebSocket error: ${error.message}`);
+//     };
+
+//     // Handle WebSocket closure
+//     socket.onclose = (event) => {
+//       if (event.wasClean) {
+//         console.log(
+//           `WebSocket closed cleanly with code ${event.code} and reason: ${event.reason}`
+//         );
+//       } else {
+//         console.error("WebSocket closed unexpectedly.");
+//       }
+//     };
+//   });
+// };
