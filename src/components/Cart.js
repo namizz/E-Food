@@ -7,7 +7,7 @@ const Image = ({ src }) => {
           src ||
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe3WVxWxsObZR_aIEK0SPcekOKGaRS1r1eRw&s"
         }
-        className="object-cover rounded-full h-full w-full"
+        className="object-cover rounded-full h-full w-[90px]"
       />
     </div>
   );

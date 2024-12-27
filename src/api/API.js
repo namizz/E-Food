@@ -142,58 +142,71 @@ export const orderFood = async (arr) => {
   }
 };
 
-// export const orderFood = async (arr) => {
-//   const wsUrl = "wss://efood-brvf.onrender.com/api/orders"; // WebSocket URL
+export const orderedItems = async () => {
+  try {
+    const response = await fetch(
+      "https://efood-brvf.onrender.com/api/orders/new",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Can't fetch orderd Item");
+    }
+    const data = await response.json();
+    console.log("Fetch the ordered Item");
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching the order:", error.message);
+    throw error;
+  }
+};
+export const myorder = async () => {
+  try {
+    const response = await fetch("https://efood-brvf.onrender.com/api/orders", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Can't fetch orderd Item");
+    }
+    const data = await response.json();
+    console.log("Fetch the ordered Item", data.data);
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching the order:", error.message);
+    throw error;
+  }
+};
 
-//   // Check WebSocket compatibility
-//   if (!window.WebSocket) {
-//     throw new Error("WebSocket is not supported in this browser.");
-//   }
+export const changeStatus = async ({ id, status }) => {
+  try {
+    const response = await fetch(
+      `https://efood-brvf.onrender.com/api/orders/status/${id}?status=${status}`,
+      {
+        method: "PUT",
+        credentials: "include",
+      }
+    );
 
-//   return new Promise((resolve, reject) => {
-//     const socket = new WebSocket(wsUrl);
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error(`Failed to update order status: ${response.statusText}`);
+    }
 
-//     // Open WebSocket connection
-//     socket.onopen = () => {
-//       console.log("WebSocket connection established.");
-//       try {
-//         // Send the data as a JSON string
-//         const dataToSend = JSON.stringify(arr);
-//         socket.send(dataToSend);
-//         console.log("Data sent:", dataToSend);
-//       } catch (error) {
-//         reject(`Error sending data: ${error.message}`);
-//       }
-//     };
-
-//     // Handle messages from the server
-//     socket.onmessage = (event) => {
-//       console.log("Message received from server:", event.data);
-//       try {
-//         const response = JSON.parse(event.data);
-//         resolve(response);
-//       } catch (error) {
-//         reject(`Error parsing server response: ${error.message}`);
-//       } finally {
-//         socket.close(); // Close connection after receiving a response
-//       }
-//     };
-
-//     // Handle WebSocket errors
-//     socket.onerror = (error) => {
-//       console.error("WebSocket error:", error);
-//       reject(`WebSocket error: ${error.message}`);
-//     };
-
-//     // Handle WebSocket closure
-//     socket.onclose = (event) => {
-//       if (event.wasClean) {
-//         console.log(
-//           `WebSocket closed cleanly with code ${event.code} and reason: ${event.reason}`
-//         );
-//       } else {
-//         console.error("WebSocket closed unexpectedly.");
-//       }
-//     };
-//   });
-// };
+    const data = await response.json(); // Parse the JSON response if needed
+    console.log("Order status updated:", data);
+    return data;
+  } catch (error) {
+    console.error("Error updating order status:", error);
+  }
+};

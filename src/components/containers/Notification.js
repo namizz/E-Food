@@ -1,30 +1,52 @@
-// src/components/Notifications.js
 import React, { useState, useEffect } from "react";
 import connectWebSocket from "../../socket/Socket";
-import NotificationCard from "../NotificationCard"; // Assuming you have a card component for notifications
+import NotificationCard from "../NotificationCard";
 
-const Notifications = () => {
-  const [notification, setNotification] = useState(null); // State to store the notification
-
+const Notifications = ({ notifications, setNotifications }) => {
   useEffect(() => {
-    connectWebSocket(setNotification); // Pass setNotification to connectWebSocket
+    // Load notifications from local storage on mount
+    const storedNotifications =
+      JSON.parse(localStorage.getItem("notifications")) || [];
+    setNotifications(storedNotifications);
+
+    // Connect to WebSocket and handle incoming notifications
+    connectWebSocket((newNotification) => {
+      const updatedNotifications = [...notifications, newNotification];
+      setNotifications(updatedNotifications);
+      localStorage.setItem(
+        "notifications",
+        JSON.stringify(updatedNotifications)
+      );
+    });
   }, []); // Run only once when the component mounts
 
-  return (
-    <div className="bg-red-400 fixed right-10 top-1">
-      <h1>Notifications</h1>
-      <p>Listening for real-time updates...</p>
+  const handleResponse = (response, index) => {
+    console.log("User response:", response);
 
-      {/* Display notification if available */}
-      {notification && (
+    // Clear the notification after responding
+    const updatedNotifications = notifications.filter((_, i) => i !== index);
+    setNotifications(updatedNotifications);
+    localStorage.setItem("notifications", JSON.stringify(updatedNotifications));
+  };
+
+  const handleNotificationClick = (index) => {
+    // Mark notification as seen (you can customize this further)
+    console.log("Notification seen:", notifications[index]);
+
+    // Optionally remove or modify the notification
+    handleResponse(null, index); // Remove it after clicking
+  };
+
+  return (
+    <div className="absolute flex flex-col-reverse right-10">
+      {notifications.map((notification, index) => (
         <NotificationCard
+          key={index}
           message={notification}
-          onRespond={(response) => {
-            console.log("User response:", response);
-            setNotification(null); // Clear the notification after responding
-          }}
+          onRespond={(response) => handleResponse(response, index)}
+          onClick={() => handleNotificationClick(index)} // Pass click handler
         />
-      )}
+      ))}
     </div>
   );
 };

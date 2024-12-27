@@ -47,10 +47,19 @@ module.exports = {
         h4: "clamp(10px, 1.4vw, 18px)",
         h5: "clamp(10px, 1.1vw, 14px)",
         hm: "clamp(10px,1.25vw, 16px)",
+        notif: "clamp(5px,0.8vw,12px)",
       },
       backgroundImage: {
         yellowGradient: "linear-gradient(to top-right, #ffd900, #ffdd00)",
-        sent: "linear-gradient(to right, #95F551 0%, #95F551 20%, transparent 20%, #fff 100%)",
+        sent: "linear-gradient(to right, #95F551 0%, #95F551 7%, transparent 7%, #fff 100%)",
+        accepted:
+          "linear-gradient(to right, #95F551 0%, #95F551 28%, transparent 28%, #fff 100%)",
+        preparing:
+          "linear-gradient(to right, #95F551 0%, #95F551 50%, transparent 50%, #fff 100%)",
+        ready:
+          "linear-gradient(to right, #95F551 0%, #95F551 72%, transparent 72%, #fff 100%)",
+        delivered:
+          "linear-gradient(to right, #95F551 0%, #95F551 100%, transparent 100%, #fff 100%)",
       },
     },
   },

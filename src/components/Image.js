@@ -37,7 +37,7 @@ const Image = ({ setImage, setURL }) => {
           />
         </div>
       ) : (
-        <div className=" border-red-300 border-2 w-40 h-cardH absolute"></div>
+        <div className="  w-40 h-cardH absolute"></div>
       )}
       <input
         id="file"

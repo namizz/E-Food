@@ -93,7 +93,7 @@ const SignUpForm = () => {
         className="flex flex-col items-center bg-gray-800 bg-opacity-30 backdrop-blur-sm p-8 rounded-lg w-full max-w-sm"
         onSubmit={handleSubmit}
       >
-        <p className="text-[#2f678d] text-4xl mb-12 font-bold font-jolly-lodger">
+        <p className="text-[#4099d4] text-4xl mb-12 font-bold font-jolly-lodger">
           E-Food SignUp
         </p>
         <Input
@@ -140,7 +140,7 @@ const SignUpPage = () => {
     <div
       className="w-full h-screen bg-cover bg-center backdrop-blur-2xl"
       style={{
-        backgroundImage: `url('https://t3.ftcdn.net/jpg/05/66/28/54/360_F_566285463_VqhNEzBvrNPqUXfskGRdONrNYMaNdXkp.jpg')`,
+        backgroundImage: `url('https://i.pinimg.com/736x/f7/c8/76/f7c8768df03d080ffd26828bd36b70df.jpg')`,
       }}
     >
       <SignUpForm />

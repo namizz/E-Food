@@ -176,7 +176,7 @@ const NewItem = ({ display }) => {
 
   return (
     <div
-      className="flex-col  mx-[20%] border-t-2 border-[#358f6c69] mb-6 pb-2 rounded-3xl rounded-tl-none bg-[#8f971d07] shadow-lg "
+      className="flex-col  mx-[20%] mb-6 pb-2 rounded-md  bg-[#ffffff7a] shadow-lg "
       style={{ display: display }}
     >
       <div className="flex">

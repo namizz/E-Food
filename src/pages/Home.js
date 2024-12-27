@@ -12,7 +12,7 @@ import Notifications from "../components/containers/Notification";
 
 const Items = ({ setSelected, selected, setOrder }) => {
   return (
-    <div className={`${selected ? "w-[55%]" : "w-[75%] mx-auto"}  border-2`}>
+    <div className={`${selected ? "w-[55%]" : "w-[75%] mx-auto"} `}>
       <p className="border-[4px] border-[#FF8E32] text-h2 text-[#FF7300] font-semibold inline-block px-item rounded-t-3xl">
         Items
       </p>
@@ -84,6 +84,7 @@ const Home = () => {
   const [addDisplay, setDisplay] = useState("none"); // About new food
   const [selected, setSelected] = useState(null); // About selected element
   const [newOrder, setOrder] = useState(null);
+  const [notifications, setNotifications] = useState([]); //notifications
 
   useEffect(() => {
     const fetchData = async () => {
@@ -128,9 +129,21 @@ const Home = () => {
       <Header />
       <BackgroundImg />
       <BackgroundImg2 />
-      <NavBar changeDisplay={changeDisplay} />
+      <NavBar
+        selected={addDisplay}
+        changeDisplay={changeDisplay}
+        notifications={notifications}
+        setNotifications={setNotifications}
+      />
       {/* Only render Notifications if user is loaded and has the role */}
-      {user.role && user.role === "ROLE_ADMIN" ? <Notifications /> : ""}
+      {user.role && user.role === "ROLE_ADMIN" ? (
+        <Notifications
+          notifications={notifications}
+          setNotifications={setNotifications}
+        />
+      ) : (
+        ""
+      )}
       <NewItem display={addDisplay} />
       <Body selected={selected} setSelected={setSelected} setOrder={setOrder} />
       <UserInfo user={user} setOrder={setOrder} />

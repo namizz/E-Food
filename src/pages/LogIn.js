@@ -113,7 +113,7 @@ const LoginPage = () => {
     <div
       className="w-full h-screen bg-cover bg-center backdrop-blur-2xl"
       style={{
-        backgroundImage: `url('https://i.pinimg.com/736x/e1/5e/03/e15e033731d2da74297cc50cb126f33e.jpg')`,
+        backgroundImage: `url('https://i.pinimg.com/736x/f7/c8/76/f7c8768df03d080ffd26828bd36b70df.jpg')`,
       }}
     >
       <LoginForm />
