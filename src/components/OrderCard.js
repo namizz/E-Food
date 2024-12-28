@@ -1,3 +1,4 @@
+import { useState } from "react";
 const Cancel = () => {
   return (
     <div className="absolute right-4 top-4 bg-gradient-to-r from-[#FF9843] to-[#FF5353] px-2 rounded-lg text-white text-h5">
@@ -19,10 +20,10 @@ const List = ({ name, quantity }) => {
 const OrderedItems = ({ items }) => {
   return (
     <div className="text-h3 w-[80%]">
-      {items.map((item, index) => {
+      {items.map((item) => {
         return (
           <List
-            key={index}
+            key={item.id}
             name={item.food.name} // Access the name from the food object
             quantity={item.quantity} // Corrected property name
           />
@@ -40,54 +41,63 @@ const OrderStatusDiv = () => {
   );
 };
 
-const OrderStatus = ({ id, status, role }) => {
-  const state = ["Pending", "Accepted", "Preparing", "Ready", "Delivered"];
+const OrderStatus = ({ id, initialStatus, role }) => {
+  const [status, setStatus] = useState(initialStatus); // Manage status state
 
+  const state = ["Pending", "Accepted", "Preparing", "READY", "Delivered"];
+  console.log(initialStatus);
   const statusUpdate = async (currentStatus, direction) => {
     let newStatus = currentStatus;
     for (let i = 0; i < state.length - 1; i++) {
       if (currentStatus === state[i]) {
-        if (direction === false && i != 0) newStatus = state[i - 1];
+        if (direction === false && i !== 0) newStatus = state[i - 1];
         else if (direction === true) newStatus = state[i + 1];
         break; // Exit the loop once we find the next status
       }
     }
-    console.log("New Status:", newStatus); // Log the updated status
-    await changeStatus({ id, status: newStatus }); // Call your status update function with the new status
-  };
+    console.log("New Status:", newStatus);
 
-  console.log("Current Status:", status);
+    // Update status in the backend
+    await changeStatus({ id, status: newStatus });
+
+    // Update the local state to trigger a re-render
+    setStatus(newStatus);
+  };
 
   return (
     <div>
       <div className="flex">
-        {/* {role === "ROLE_ADMIN" ? (
+        {role === "ROLE_ADMIN" && (
           <div
-            className="bg-red-400 rounded-full p-1 "
+            className="bg-red-400 rounded-full p-1"
             onClick={() => statusUpdate(status, false)} // Pass current status to statusUpdate
-          >{`<<`}</div>
-        ) : (
-          ""
-        )} */}
+          >
+            {"<<"}
+          </div>
+        )}
+
         <div className="h-2 w-[85%] mx-[5%] overflow-hidden rounded-full border border-[#286e1a] bg-[#ffe91f60]">
           <div
             className={`h-full ${status === "Pending" ? "bg-sent" : ""} ${
               status === "Accepted" ? "bg-accepted" : ""
             } ${status === "Preparing" ? "bg-preparing" : ""} ${
-              status === "Ready" ? "bg-ready" : ""
+              status === "READY" ? "bg-ready" : ""
             } ${status === "Delivered" ? "bg-delivered" : ""}`}
           ></div>
         </div>
-        {/* {role === "ROLE_ADMIN" ? (
+
+        {role === "ROLE_ADMIN" && (
           <div
             className="bg-green-400 rounded-full p-1"
             onClick={() => statusUpdate(status, true)} // Pass current status to statusUpdate
-          >{`>>`}</div>
-        ) : null} */}
+          >
+            {">>"}
+          </div>
+        )}
       </div>
 
       <div className="flex justify-evenly w-[96%] text-h5">
-        <p>Sent</p>
+        <p>Pending</p>
         <p>Accepted</p>
         <p>Preparing</p>
         <p>Ready</p>
@@ -104,9 +114,7 @@ const changeStatus = async ({ id, status }) => {
       `https://efood-brvf.onrender.com/api/orders/status/${id}?status=${status}`,
       {
         method: "PUT",
-        headers: {
-          Accept: "*/*", // Add any other necessary headers
-        },
+        credentials: "include",
       }
     );
 
@@ -123,14 +131,13 @@ const changeStatus = async ({ id, status }) => {
 };
 
 const OrderCard = ({ price, id, items, status, role }) => {
-  console.log(role);
   return (
     <div className="bg-[#FFFDB5] border-[1px] border-black w-[36%] relative p-3 px-8">
       <Cancel />
       <OrderedItems items={items || []} />
       <OrderStatusDiv />
 
-      <OrderStatus status={status} id={id} role={role} />
+      <OrderStatus initialStatus={status} id={id} role={role} />
     </div>
   );
 };

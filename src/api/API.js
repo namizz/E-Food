@@ -187,7 +187,6 @@ export const myorder = async () => {
     throw error;
   }
 };
-
 export const changeStatus = async ({ id, status }) => {
   try {
     const response = await fetch(
@@ -198,12 +197,11 @@ export const changeStatus = async ({ id, status }) => {
       }
     );
 
-    // Check if the response is successful
     if (!response.ok) {
       throw new Error(`Failed to update order status: ${response.statusText}`);
     }
 
-    const data = await response.json(); // Parse the JSON response if needed
+    const data = await response.json();
     console.log("Order status updated:", data);
     return data;
   } catch (error) {
