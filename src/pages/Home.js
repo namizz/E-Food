@@ -9,16 +9,34 @@ import ItemsBox from "../components/containers/ItemBox";
 import DisplayItem from "../components/DisplayItem";
 import CartBox from "../components/containers/CartBox";
 import Notifications from "../components/containers/Notification";
+import { useNavigate } from "react-router-dom";
+import UpdateItem from "../components/containers/UpdateItem";
 
-const Items = ({ setSelected, selected, setOrder }) => {
+const Items = ({
+  user,
+  setSelected,
+  selected,
+  setOrder,
+  setEdit,
+  editmode,
+}) => {
+  console.log("edit mode Item when chicked z-inde", editmode);
   return (
-    <div className={`${selected ? "w-[55%]" : "w-[75%] mx-auto"} `}>
+    <div
+      className={`${selected ? "w-[55%]" : "w-[75%] mx-auto"} 
+      `}
+    >
       <p className="border-[4px] border-[#FF8E32] text-h2 text-[#FF7300] font-semibold inline-block px-item rounded-t-3xl">
         Items
       </p>
       <hr className="relative bottom-1 h-[4px] bg-[#FF8E32]" />
       <div className="border-t-2 border-b-2 border-[#FF8E32] py-4 rounded-xl flex">
-        <ItemsBox setSelected={setSelected} setOrder={setOrder} />
+        <ItemsBox
+          user={user}
+          setSelected={setSelected}
+          setOrder={setOrder}
+          setEdit={setEdit}
+        />
       </div>
     </div>
   );
@@ -62,17 +80,20 @@ const UserInfo = ({ user }) => {
   );
 };
 
-const Body = ({ setSelected, selected, setOrder }) => {
+const Body = ({ user, setSelected, selected, setOrder, editmode, setEdit }) => {
   return (
     <div className="flex mx-auto justify-center">
       <Items
         setSelected={setSelected}
         selected={selected}
         setOrder={setOrder}
+        user={user}
+        setEdit={setEdit}
+        editmode={editmode}
       />
       {selected ? (
         <div className="w-[25%] border-2 border-red-300">
-          <DisplayItem props={selected} />
+          <DisplayItem user={user} props={selected} />
         </div>
       ) : null}
     </div>
@@ -80,12 +101,13 @@ const Body = ({ setSelected, selected, setOrder }) => {
 };
 
 const Home = () => {
-  const { user, setUser } = useUser(); // About user
+  const { user, setUser } = useUser();
   const [addDisplay, setDisplay] = useState("none"); // About new food
   const [selected, setSelected] = useState(null); // About selected element
   const [newOrder, setOrder] = useState(null);
   const [notifications, setNotifications] = useState([]); //notifications
-
+  const [editmode, setEdit] = useState(0);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -93,6 +115,7 @@ const Home = () => {
         setUser(data.data);
       } catch (error) {
         console.error("Error fetching user info:", error);
+        navigate("/login"); // Adjust the route if necessary
       }
     };
     fetchData();
@@ -114,14 +137,13 @@ const Home = () => {
     setDisplay((prevDisplay) => (prevDisplay === "none" ? "block" : "none"));
   };
 
-  // Ensure `user` is loaded and `user.role` is available before rendering the component
-  if (!user) {
-    return <p>Loading...</p>; // Optionally, show a loading spinner here
-  }
-
   return (
     <div
-      className=""
+      className={`${
+        editmode !== 0
+          ? "w-full h-full bg-black bg-opacity-50 backdrop-blur-md"
+          : null
+      }`}
       onClick={() => {
         setSelected(null);
       }}
@@ -135,18 +157,31 @@ const Home = () => {
         notifications={notifications}
         setNotifications={setNotifications}
       />
-      {/* Only render Notifications if user is loaded and has the role */}
-      {user.role && user.role === "ROLE_ADMIN" ? (
-        <Notifications
-          notifications={notifications}
-          setNotifications={setNotifications}
-        />
+      {user && user.role === "ROLE_ADMIN" ? (
+        <>
+          <Notifications
+            notifications={notifications}
+            setNotifications={setNotifications}
+          />
+          <NewItem display={addDisplay} />
+        </>
       ) : (
         ""
       )}
-      <NewItem display={addDisplay} />
-      <Body selected={selected} setSelected={setSelected} setOrder={setOrder} />
+      <Body
+        user={user}
+        selected={selected}
+        setSelected={setSelected}
+        setOrder={setOrder}
+        setEdit={setEdit}
+        editmode={editmode}
+      />
       <UserInfo user={user} setOrder={setOrder} />
+      {editmode ? (
+        <div className="absolute top-0 mx-20 ">
+          <UpdateItem id={editmode} editmode={setEdit} />
+        </div>
+      ) : null}
       <CartBox newOrder={newOrder} />
     </div>
   );

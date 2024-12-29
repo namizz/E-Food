@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 export const signup = async (Info) => {
   try {
     const response = await fetch(
@@ -61,7 +63,7 @@ export const PersonInfo = async () => {
     }
 
     const data = await response.json();
-    console.log("Fetched user data:", data);
+    // console.log("Fetched user data:", data);
     return data;
   } catch (error) {
     console.error("Get User Info failed", error.message);
@@ -206,5 +208,46 @@ export const changeStatus = async ({ id, status }) => {
     return data;
   } catch (error) {
     console.error("Error updating order status:", error);
+  }
+};
+
+export const getItemById = async (id) => {
+  try {
+    const response = await fetch(
+      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      {
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to get: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error Getting Item:", error);
+  }
+};
+export const updateItem = async (id, Info) => {
+  console.log(id, Info);
+  try {
+    const response = await fetch(
+      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      {
+        headers: {
+          "Content-Text": "application/json",
+          method: "PUT",
+          body: JSON.stringify({ Info }),
+          credentials: "includes",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Failed to update: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data.message;
+  } catch (error) {
+    console.error("Error Updating Item:", error);
   }
 };

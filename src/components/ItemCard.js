@@ -59,14 +59,22 @@ const Available = () => {
     </button>
   );
 };
-const EditButton = () => {
+const EditButton = ({ id, setEdit }) => {
   return (
-    <div className="w-8 h-8 border-2 border-red-300 absolute right-[5%]"></div>
+    <div
+      className="w-8 h-8 border-2 border-red-300 absolute right-[5%]"
+      onClick={(e) => {
+        e.stopPropagation();
+        console.log("id print to make edit mode on", id);
+        setEdit(id);
+      }}
+    >
+      ✏️
+    </div>
   );
 };
-const Item = (props) => {
+const Item = ({ user, setEdit, ...props }) => {
   const { setSelected, setOrder } = props;
-  const { user } = useUser();
   const role = user.role !== null ? user.role : "";
   return (
     <div
@@ -77,7 +85,9 @@ const Item = (props) => {
         setSelected(props);
       }}
     >
-      <EditButton />
+      {role === "ROLE_ADMIN" ? (
+        <EditButton setEdit={setEdit} id={props.id} />
+      ) : null}
       <Image image={props.src} />
       <div className="relative">
         <Name name={props.name} />

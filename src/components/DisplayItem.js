@@ -79,8 +79,7 @@ const EditButton = () => {
   );
 };
 
-const DisplayItem = ({ props }) => {
-  const { user } = useUser();
+const DisplayItem = ({ user, ...props }) => {
   const role = user.role || "";
 
   return (

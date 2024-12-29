@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getFood } from "../../api/API";
 import ItemCard from "../ItemCard";
 
-const ItemsBox = ({ setSelected, setOrder }) => {
+const ItemsBox = ({ user, setSelected, setOrder, setEdit }) => {
   const [foods, setFoods] = useState([]); // Initialize as an empty array
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ const ItemsBox = ({ setSelected, setOrder }) => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="flex flex-wrap w-full">
+    <div className="flex flex-wrap w-full ">
       {foods && foods.length > 0 ? (
         foods.map((food) => {
           return (
@@ -43,8 +43,10 @@ const ItemsBox = ({ setSelected, setOrder }) => {
               description={food.description}
               price={food.price}
               src={food.imageUrl}
+              user={user}
               setSelected={setSelected}
               setOrder={setOrder}
+              setEdit={setEdit}
             />
           );
         })

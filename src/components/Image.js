@@ -1,6 +1,6 @@
 import React from "react";
 
-const Image = ({ setImage, setURL }) => {
+const Image = ({ url, setImage, setURL }) => {
   const fileInputRef = React.useRef(null);
   const [imageurl, setImageURL] = React.useState(null);
 
@@ -24,7 +24,7 @@ const Image = ({ setImage, setURL }) => {
 
   return (
     <div className="p-[0.7em] mt-0 mb-0 mr-12 ml-10" onClick={handleClick}>
-      {imageurl === null ? (
+      {imageurl === null && url === null ? (
         <div>
           <div className="text-sm text-gray-700 font-[600]">
             Upload image here
