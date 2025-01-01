@@ -60,7 +60,7 @@ module.exports = {
         ready:
           "linear-gradient(to right, #95F551 0%, #95F551 72%, transparent 72%, #fff 100%)",
         delivered:
-          "linear-gradient(to right, #95F551 0%, #95F551 100%, transparent 100%, #fff 100%)",
+          "linear-gradient(to right, #a5a5a5 40%, #747474 100%, transparent 100%, #fff 100%)",
       },
     },
   },

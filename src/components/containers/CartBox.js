@@ -78,7 +78,7 @@ const CartBox = ({ newOrder }) => {
       }
     };
 
-    return newOrder ? (
+    return hashmap ? (
       <div
         className="bg-gradient-to-r from-[#ff8441] to-[#ff9d00] text-h3 px-9 py-2 text-center text-white rounded-2xl cursor-pointer"
         onClick={handlePlaceOrder}
@@ -89,7 +89,7 @@ const CartBox = ({ newOrder }) => {
   };
 
   const Cancel = () => {
-    return newOrder ? (
+    return hashmap ? (
       <div className="text-red-500 text-h3 text-center px-2 py-2">cancel</div>
     ) : null;
   };

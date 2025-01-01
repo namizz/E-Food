@@ -228,25 +228,50 @@ export const getItemById = async (id) => {
     console.error("Error Getting Item:", error);
   }
 };
-export const updateItem = async (id, Info) => {
-  console.log(id, Info);
+// export const updateItem = async (id, Info) => {
+//   console.log(id, Info);
+//   try {
+//     const response = await fetch(
+//       `https://efood-brvf.onrender.com/api/foods/${id}`,
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           method: "PUT",
+//           body: JSON.stringify({ Info }),
+//           credentials: "includes",
+//         },
+//       }
+//     );
+//     if (!response.ok) {
+//       throw new Error(`Failed to update: ${response.statusText}`);
+//     }
+//     const data = await response.json();
+//     return data.message;
+//   } catch (error) {
+//     console.error("Error Updating Item:", error);
+//   }
+// };
+export const updateItem = async (id, info) => {
+  console.log(id, info);
   try {
     const response = await fetch(
       `https://efood-brvf.onrender.com/api/foods/${id}`,
       {
+        method: "PUT", // Correct placement of method
         headers: {
-          "Content-Text": "application/json",
-          method: "PUT",
-          body: JSON.stringify({ Info }),
-          credentials: "includes",
+          "Content-Type": "application/json", // Correct header key
         },
+        body: JSON.stringify(info), // Correctly stringify `info` directly
+        credentials: "include", // Correct credentials value
       }
     );
+
     if (!response.ok) {
       throw new Error(`Failed to update: ${response.statusText}`);
     }
+
     const data = await response.json();
-    return data.message;
+    return data.message; // Assuming the response contains a `message` field
   } catch (error) {
     console.error("Error Updating Item:", error);
   }

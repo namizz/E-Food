@@ -188,6 +188,9 @@ const UpdateItem = ({ id, editmode }) => {
     <div
       className="flex-col absolute top-0 left-0 right-0 bottom-0 mx-auto mb-6 pb-2 rounded-md bg-[#ffffff] bg-opacity-80 shadow-lg"
       style={{ maxWidth: "600px", margin: "auto" }} // Ensuring center positioning
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
     >
       <div className="flex">
         <InputBox

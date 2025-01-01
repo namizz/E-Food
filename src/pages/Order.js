@@ -5,7 +5,72 @@ import OrderCard from "../components/OrderCard";
 import { orderedItems, PersonInfo, myorder } from "../api/API";
 import { useUser } from "../content/UserContent";
 
-const Order = () => {
+const PastOrders = ({ user, ordered }) => {
+  return (
+    <>
+      {user && user.role === "ROLE_USER" ? (
+        <div className="border-2">
+          <p>Past Orders</p>
+        </div>
+      ) : (
+        ""
+      )}
+      {user && user.role === "ROLE_USER" ? (
+        ordered.length > 0 ? (
+          ordered.map((o) => {
+            if (o.status === "Delivered") {
+              const compositeKey = `${o.id}-${o.status}-${o.totalPrice}`; // Create a composite key
+              return (
+                <OrderCard
+                  key={compositeKey}
+                  id={o.id}
+                  items={o.items}
+                  status={o.status}
+                  price={o.totalPrice}
+                  role={user.role}
+                />
+              );
+            }
+            return null; // Return null if the order status is not "Delivered"
+          })
+        ) : (
+          <p>There is No Past Order</p>
+        )
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
+const CurrentOrder = ({ user, ordered }) => {
+  return (
+    <>
+      <div className="border-2">
+        <p>Current Orders</p>
+      </div>
+
+      {ordered.length > 0
+        ? ordered.map((o) => {
+            if (o.status !== "Delivered") {
+              const compositeKey = `${o.id}-${o.status}-${o.totalPrice}`; // Create a composite key
+              return (
+                <OrderCard
+                  key={compositeKey}
+                  id={o.id}
+                  items={o.items}
+                  status={o.status}
+                  price={o.totalPrice}
+                  role={user.role}
+                />
+              );
+            }
+          })
+        : "There is No Current Order "}
+    </>
+  );
+};
+
+const Order = ({ addDisplay, changeDisplay }) => {
   const [ordered, setOrders] = useState([]);
   const { user, setUser } = useUser();
   useEffect(() => {
@@ -30,7 +95,6 @@ const Order = () => {
           try {
             const fetchedOrders = await orderedItems();
             setOrders(fetchedOrders); // Store orders in state
-            console.log("Orders: ", fetchedOrders);
           } catch (error) {
             console.error("Failed to fetch orders:", error.message);
           }
@@ -53,32 +117,13 @@ const Order = () => {
     }
   }, [user]); // Run this effect whenever 'user' state changes
   return (
-    <div className="flex flex-col items-center mx-auto border-2">
-      <Header />
-      {/* <NavBar /> */}
-      <div className="border-2">
-        <p>Current Orders</p>
+    <div className="flex flex-col items-center  border-2">
+      <Header user={user} />
+      <div className="items-end w-full">
+        <NavBar selected={addDisplay} changeDisplay={changeDisplay} />
       </div>
-
-      {ordered.length > 0
-        ? ordered.map((o) => {
-            const compositeKey = `${o.id}-${o.status}-${o.totalPrice}`; // Create a composite key
-            return (
-              <OrderCard
-                key={compositeKey}
-                id={o.id}
-                items={o.items}
-                status={o.status}
-                price={o.totalPrice}
-                role={user.role}
-              />
-            );
-          })
-        : "There is No Order "}
-
-      <div>
-        <p>Past Orders</p>
-      </div>
+      <CurrentOrder user={user} ordered={ordered} />
+      <PastOrders user={user} ordered={ordered} />
     </div>
   );
 };

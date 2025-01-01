@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 const Cancel = () => {
   return (
     <div className="absolute right-4 top-4 bg-gradient-to-r from-[#FF9843] to-[#FF5353] px-2 rounded-lg text-white text-h5">
@@ -41,11 +41,10 @@ const OrderStatusDiv = () => {
   );
 };
 
-const OrderStatus = ({ id, initialStatus, role }) => {
+const OrderStatus = ({ id, initialStatus, role, reload }) => {
   const [status, setStatus] = useState(initialStatus); // Manage status state
 
   const state = ["Pending", "Accepted", "Preparing", "READY", "Delivered"];
-  console.log(initialStatus);
   const statusUpdate = async (currentStatus, direction) => {
     let newStatus = currentStatus;
     for (let i = 0; i < state.length - 1; i++) {
@@ -55,6 +54,7 @@ const OrderStatus = ({ id, initialStatus, role }) => {
         break; // Exit the loop once we find the next status
       }
     }
+
     console.log("New Status:", newStatus);
 
     // Update status in the backend
@@ -62,21 +62,26 @@ const OrderStatus = ({ id, initialStatus, role }) => {
 
     // Update the local state to trigger a re-render
     setStatus(newStatus);
+    window.location.reload();
   };
 
   return (
     <div>
       <div className="flex">
         {role === "ROLE_ADMIN" && (
-          <div
+          <button
             className="bg-red-400 rounded-full p-1"
             onClick={() => statusUpdate(status, false)} // Pass current status to statusUpdate
           >
             {"<<"}
-          </div>
+          </button>
         )}
 
-        <div className="h-2 w-[85%] mx-[5%] overflow-hidden rounded-full border border-[#286e1a] bg-[#ffe91f60]">
+        <div
+          className={`h-2 w-[85%] mx-[5%] overflow-hidden rounded-full border ${
+            status === "Delivered" ? "border-[#747474]" : "border-[#286e1a]"
+          } bg-[#ffe91f60]`}
+        >
           <div
             className={`h-full ${status === "Pending" ? "bg-sent" : ""} ${
               status === "Accepted" ? "bg-accepted" : ""
@@ -87,12 +92,12 @@ const OrderStatus = ({ id, initialStatus, role }) => {
         </div>
 
         {role === "ROLE_ADMIN" && (
-          <div
+          <button
             className="bg-green-400 rounded-full p-1"
             onClick={() => statusUpdate(status, true)} // Pass current status to statusUpdate
           >
             {">>"}
-          </div>
+          </button>
         )}
       </div>
 
@@ -107,7 +112,6 @@ const OrderStatus = ({ id, initialStatus, role }) => {
   );
 };
 
-// Assuming `changeStatus` function is defined somewhere in your app as shown earlier
 const changeStatus = async ({ id, status }) => {
   try {
     const response = await fetch(
@@ -132,7 +136,11 @@ const changeStatus = async ({ id, status }) => {
 
 const OrderCard = ({ price, id, items, status, role }) => {
   return (
-    <div className="bg-[#FFFDB5] border-[1px] border-black w-[36%] relative p-3 px-8">
+    <div
+      className={`${
+        status === "Delivered" ? "bg-gray-300" : "bg-[#FFFDB5]"
+      } border-[1px] border-black w-[36%] relative p-3 px-8 my-1`}
+    >
       <Cancel />
       <OrderedItems items={items || []} />
       <OrderStatusDiv />

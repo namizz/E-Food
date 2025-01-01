@@ -47,16 +47,16 @@ const Profile = ({ navigate, user }) => {
 
   return (
     <div className="relative">
-      <p className="absolute bottom-[10%] right-[11%] font-semibold">
+      <p className="absolute bottom-2 right-36 font-semibold">
         {user && user.role == "ROLE_ADMIN" ? (
           <span className="block font-light text-orange-300">(admin)</span>
         ) : (
           ""
         )}
-        <span className="text-orange-500">{user.name}</span>
+        <span className="text-orange-500">{user && user.name}</span>
       </p>
       <div
-        className="absolute w-profile h-profile rounded-full border-2 border-white bottom-[10%] right-[7%] cursor-pointer"
+        className="absolute w-profile h-profile rounded-full border-2 border-white bottom-2 right-16 cursor-pointer"
         onClick={toggleButtons}
       >
         <img

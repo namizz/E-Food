@@ -33,7 +33,7 @@ const Price = ({ price }) => {
 };
 const Desciption = ({ description }) => {
   return (
-    <div className="text-h5 text-[#33174C] font-medium px-4">
+    <div className="text-h5 text-[#33174C] font-medium px-4 overflow-hidden overflow-ellipsis whitespace-nowrap">
       {description || "description"}
     </div>
   );
@@ -75,7 +75,7 @@ const EditButton = ({ id, setEdit }) => {
 };
 const Item = ({ user, setEdit, ...props }) => {
   const { setSelected, setOrder } = props;
-  const role = user.role !== null ? user.role : "";
+  const role = user !== null ? user.role : "";
   return (
     <div
       className="w-cardL relative m-2 mx-4 rounded-3xl"

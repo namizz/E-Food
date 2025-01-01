@@ -11,6 +11,8 @@ import CartBox from "../components/containers/CartBox";
 import Notifications from "../components/containers/Notification";
 import { useNavigate } from "react-router-dom";
 import UpdateItem from "../components/containers/UpdateItem";
+import Report from "../components/Report";
+// import OrderNotification from "../components/containers/OrderNotification";
 
 const Items = ({
   user,
@@ -63,25 +65,13 @@ const BackgroundImg = () => {
   );
 };
 
-const UserInfo = ({ user }) => {
-  return (
-    <div>
-      {user ? (
-        <div className="user-info">
-          <p>Name: {user.name}</p>
-          <p>Phone Number: {user.phoneNumber}</p>
-          <p>Role: {user.role}</p>
-        </div>
-      ) : (
-        <p>Loading user info...</p>
-      )}
-    </div>
-  );
-};
-
 const Body = ({ user, setSelected, selected, setOrder, editmode, setEdit }) => {
   return (
-    <div className="flex mx-auto justify-center">
+    <div
+      className={`flex mx-auto justify-center ${
+        editmode !== 0 ? "blur-sm" : null
+      }`}
+    >
       <Items
         setSelected={setSelected}
         selected={selected}
@@ -99,12 +89,12 @@ const Body = ({ user, setSelected, selected, setOrder, editmode, setEdit }) => {
   );
 };
 
-const Home = () => {
+const Home = ({ addDisplay, setDisplay }) => {
   const { user, setUser } = useUser();
-  const [addDisplay, setDisplay] = useState("none"); // About new food
   const [selected, setSelected] = useState(null); // About selected element
   const [newOrder, setOrder] = useState(null);
   const [notifications, setNotifications] = useState([]); //notifications
+  const [OrdNotify, setOrdNotify] = useState([]);
   const [editmode, setEdit] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
@@ -140,14 +130,18 @@ const Home = () => {
     <div
       className={`${
         editmode !== 0
-          ? "w-full h-[100vh] bg-orange-300 bg-opacity-50 backdrop-blur-sm"
+          ? "w-full h-[100vh] bg-orange-300 bg-opacity-50 backdrop-blur-lg"
           : null
       }`}
       onClick={() => {
-        setSelected(null);
+        if (editmode !== 0) {
+          setEdit(0);
+        } else {
+          setSelected(null);
+        }
       }}
     >
-      <Header />
+      <Header user={user} />
       <BackgroundImg />
       <BackgroundImg2 />
       <NavBar
@@ -156,17 +150,29 @@ const Home = () => {
         notifications={notifications}
         setNotifications={setNotifications}
       />
-      {user && user.role === "ROLE_ADMIN" ? (
-        <>
-          <Notifications
-            notifications={notifications}
-            setNotifications={setNotifications}
-          />
-          <NewItem display={addDisplay} />
-        </>
-      ) : (
-        ""
-      )}
+      {
+        user && user.role === "ROLE_ADMIN" ? (
+          <>
+            <Report />
+            <Notifications
+              notifications={notifications}
+              setNotifications={setNotifications}
+            />
+            <NewItem display={addDisplay} />
+          </>
+        ) : (
+          ""
+        )
+        //  (
+        //   <>
+        //     <OrderNotification
+        //       ordNotify={OrdNotify}
+        //       setOrdNotify={setOrdNotify}
+        //       user={user}
+        //     ></OrderNotification>
+        //   </>
+        // )
+      }
       <Body
         user={user}
         selected={selected}
@@ -175,9 +181,11 @@ const Home = () => {
         setEdit={setEdit}
         editmode={editmode}
       />
-      <UserInfo user={user} setOrder={setOrder} />
       {editmode ? (
-        <div className="fixed top-[15%] left-[20%] mx-20">
+        <div
+          className="fixed top-[15%] right-[50%] mx-20"
+          onClick={() => setEdit(0)}
+        >
           <UpdateItem id={editmode} editmode={setEdit} />
         </div>
       ) : null}
