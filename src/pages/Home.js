@@ -20,7 +20,6 @@ const Items = ({
   setEdit,
   editmode,
 }) => {
-  console.log("edit mode Item when chicked z-inde", editmode);
   return (
     <div
       className={`${selected ? "w-[55%]" : "w-[75%] mx-auto"} 
@@ -115,7 +114,7 @@ const Home = () => {
         setUser(data.data);
       } catch (error) {
         console.error("Error fetching user info:", error);
-        navigate("/login"); // Adjust the route if necessary
+        navigate("/login");
       }
     };
     fetchData();
@@ -141,7 +140,7 @@ const Home = () => {
     <div
       className={`${
         editmode !== 0
-          ? "w-full h-full bg-black bg-opacity-50 backdrop-blur-md"
+          ? "w-full h-[100vh] bg-orange-300 bg-opacity-50 backdrop-blur-sm"
           : null
       }`}
       onClick={() => {
@@ -178,7 +177,7 @@ const Home = () => {
       />
       <UserInfo user={user} setOrder={setOrder} />
       {editmode ? (
-        <div className="absolute top-0 mx-20 ">
+        <div className="fixed top-[15%] left-[20%] mx-20">
           <UpdateItem id={editmode} editmode={setEdit} />
         </div>
       ) : null}

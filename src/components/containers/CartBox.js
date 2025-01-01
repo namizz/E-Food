@@ -108,10 +108,14 @@ const CartBox = ({ newOrder }) => {
           />
         ))}
       </div>
-      <div className="flex justify-evenly mt-4">
-        <PlaceOrder />
-        <Cancel />
-      </div>
+      {hashmap ? (
+        <div className="flex justify-evenly mt-4">
+          <PlaceOrder />
+          <Cancel />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

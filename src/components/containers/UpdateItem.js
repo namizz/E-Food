@@ -103,7 +103,7 @@ const UpdateItem = ({ id, editmode }) => {
 
   const Templete = () => {
     return (
-      <div className="p-4">
+      <div className="p-4 ">
         <div className="w-[400px] bg-white">
           {/* Cart Title */}
           <div className="w-full h-10 flex items-center px-5 border-b border-gray-200 font-bold text-xs text-gray-600">
@@ -135,7 +135,7 @@ const UpdateItem = ({ id, editmode }) => {
               {/* Quantity Controller */}
               <div className="grid grid-cols-3 items-center bg-white border border-gray-300 rounded-md shadow-sm">
                 <button className="flex items-center justify-center text-gray-800">
-                  <svg
+                  {/* <svg
                     fill="none"
                     viewBox="0 0 24 24"
                     height="14"
@@ -149,13 +149,13 @@ const UpdateItem = ({ id, editmode }) => {
                       stroke="#47484b"
                       d="M20 12L4 12"
                     ></path>
-                  </svg>
+                  </svg> */}
                 </button>
                 <label className="flex items-center justify-center text-sm font-bold text-gray-800">
                   {Info.quantity || "0"}
                 </label>
                 <button className="flex items-center justify-center text-gray-800">
-                  <svg
+                  {/* <svg
                     fill="none"
                     viewBox="0 0 24 24"
                     height="14"
@@ -169,7 +169,7 @@ const UpdateItem = ({ id, editmode }) => {
                       stroke="#47484b"
                       d="M12 4V20M20 12H4"
                     ></path>
-                  </svg>
+                  </svg> */}
                 </button>
               </div>
 

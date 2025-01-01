@@ -251,3 +251,23 @@ export const updateItem = async (id, Info) => {
     console.error("Error Updating Item:", error);
   }
 };
+
+export const logout = async () => {
+  try {
+    const response = await fetch(
+      "https://efood-brvf.onrender.com/api/users/logout",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to Logout");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {}
+};

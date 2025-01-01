@@ -33,6 +33,7 @@ module.exports = {
       spacing: {
         price: "clamp(10px, 10vw, 110px)",
         small: "clamp(10px, 9vw, 95px)",
+        profile: "clamp(10px, 7vw, 75px)",
       },
       backgroundImage: {
         header: "linear-gradient(135deg, #FF9B4A, #FF7300)",
