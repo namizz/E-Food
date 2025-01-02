@@ -41,7 +41,7 @@ const OrderBar = ({
       }`}
       onClick={() => {
         setActive("order"); // Update activeTab immediately
-        if (location.pathname !== "/order") {
+        if (location.pathname !== "/order" && notifications) {
           setNotifications([]);
           localStorage.setItem("notifications", JSON.stringify([]));
           navigate("/order"); // Navigate after updating state

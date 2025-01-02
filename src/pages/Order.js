@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import OrderCard from "../components/OrderCard";
 import { orderedItems, PersonInfo, myorder } from "../api/API";
 import { useUser } from "../content/UserContent";
+import { BackgroundImg, BackgroundImg2 } from "../components/Background";
 
 const CurrentOrder = ({ user, ordered }) => {
   return (
@@ -82,6 +83,8 @@ const Order = ({ addDisplay, changeDisplay }) => {
   return (
     <div className="flex flex-col items-center  border-2">
       <Header user={user} />
+      <BackgroundImg />
+      <BackgroundImg2 />
       <div className="items-end w-full">
         <NavBar
           selected={addDisplay}
