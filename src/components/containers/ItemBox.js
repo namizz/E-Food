@@ -35,20 +35,39 @@ const ItemsBox = ({ user, setSelected, setOrder, setEdit }) => {
     <div className="flex flex-wrap w-full ">
       {foods && foods.length > 0 ? (
         foods.map((food) => {
-          return (
-            <ItemCard
-              key={food.id}
-              id={food.id}
-              name={food.name}
-              description={food.description}
-              price={food.price}
-              src={food.imageUrl}
-              user={user}
-              setSelected={setSelected}
-              setOrder={setOrder}
-              setEdit={setEdit}
-            />
-          );
+          if (user && user.role === "ROLE_ADMIN") {
+            return (
+              <ItemCard
+                key={food.id}
+                id={food.id}
+                name={food.name}
+                description={food.description}
+                price={food.price}
+                src={food.imageUrl}
+                isAvailable={food.isAvailable}
+                user={user}
+                setSelected={setSelected}
+                setOrder={setOrder}
+                setEdit={setEdit}
+              />
+            );
+          } else if (food.isAvailable === true) {
+            return (
+              <ItemCard
+                key={food.id}
+                id={food.id}
+                name={food.name}
+                description={food.description}
+                price={food.price}
+                src={food.imageUrl}
+                isAvailable={food.isAvailable}
+                user={user}
+                setSelected={setSelected}
+                setOrder={setOrder}
+                setEdit={setEdit}
+              />
+            );
+          }
         })
       ) : (
         <p>No items available.</p>

@@ -153,7 +153,9 @@ const Home = ({ addDisplay, setDisplay }) => {
       {
         user && user.role === "ROLE_ADMIN" ? (
           <>
-            <Report />
+            <div className="flex items-center justify-center w-full">
+              <Report />
+            </div>
             <Notifications
               notifications={notifications}
               setNotifications={setNotifications}
@@ -183,7 +185,7 @@ const Home = ({ addDisplay, setDisplay }) => {
       />
       {editmode ? (
         <div
-          className="fixed top-[15%] right-[50%] mx-20"
+          className="fixed top-[25%] right-[40%] mx-20"
           onClick={() => setEdit(0)}
         >
           <UpdateItem id={editmode} editmode={setEdit} />

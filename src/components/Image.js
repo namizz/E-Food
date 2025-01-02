@@ -37,7 +37,14 @@ const Image = ({ url, setImage, setURL }) => {
           />
         </div>
       ) : (
-        <div className="  w-40 h-cardH absolute"></div>
+        <div className="  w-40 h-cardH absolute">
+          <img
+            src={
+              url == null ||
+              "https://img.icons8.com/?size=48&id=8ax09IWlr80n&format=png"
+            }
+          />
+        </div>
       )}
       <input
         id="file"

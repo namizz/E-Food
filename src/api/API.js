@@ -276,6 +276,27 @@ export const updateItem = async (id, info) => {
     console.error("Error Updating Item:", error);
   }
 };
+export const deleteItem = async (id) => {
+  console.log(`Deleting item with ID: ${id}`);
+  try {
+    const response = await fetch(
+      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      {
+        method: "DELETE", // Use DELETE method
+        credentials: "include", // Include credentials (cookies, authorization headers, etc.)
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete: ${response.statusText}`);
+    }
+
+    const data = await response.json(); // Assuming the response contains a message
+    return data.message; // Return a success message or any relevant response
+  } catch (error) {
+    console.error("Error Deleting Item:", error);
+  }
+};
 
 export const logout = async () => {
   try {
@@ -294,5 +315,118 @@ export const logout = async () => {
     }
     const data = await response.json();
     return data;
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error Logout:", error);
+  }
+};
+
+export const newOrder = async () => {
+  try {
+    const response = await fetch(
+      "https://efood-brvf.onrender.com/api/orders/new",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch numebr of order");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching numebr of order:", error);
+  }
+};
+export const dailyOrder = async () => {
+  try {
+    const response = await fetch(
+      "https://efood-brvf.onrender.com/api/orders/daily",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch numebr of order");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching numebr of order:", error);
+  }
+};
+export const weeklyOrder = async () => {
+  try {
+    const response = await fetch(
+      "https://efood-brvf.onrender.com/api/orders/weekly",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch numebr of order");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching numebr of order:", error);
+  }
+};
+export const monthlyOrder = async () => {
+  try {
+    const response = await fetch(
+      "https://efood-brvf.onrender.com/api/orders/monthly",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch numebr of order");
+    }
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching numebr of order:", error);
+  }
+};
+
+export const updateAvailability = async (id, value) => {
+  console.log(`Updating availability for ID: ${id}, Current Value: ${value}`);
+  try {
+    const response = await fetch(
+      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      {
+        method: "PUT", // Use PUT method
+        headers: {
+          "Content-Type": "application/json", // Set content type to JSON
+        },
+        body: JSON.stringify({ isAvailable: !value }), // Negate the input value
+        credentials: "include", // Include credentials (cookies, authorization headers, etc.)
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to update availability: ${response.statusText}`);
+    }
+
+    const data = await response.json(); // Parse the JSON response
+    return data.message; // Assuming the response contains a `message` field
+  } catch (error) {
+    console.error("Error Updating Availability:", error);
+  }
 };

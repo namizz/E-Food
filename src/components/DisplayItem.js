@@ -80,7 +80,7 @@ const EditButton = () => {
 };
 
 const DisplayItem = ({ user, ...props }) => {
-  const role = user.role || "";
+  const role = user ? user.role : "";
 
   return (
     <div className="m-4 rounded-3xl border-2 border-red-600 shadow-lg overflow-hidden bg-white relative">
