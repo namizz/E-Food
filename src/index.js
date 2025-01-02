@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/LogIn";
 import SinUpPage from "./pages/SignUp";
 import Order from "./pages/Order";
+import PastOrders from "./pages/PastOrder";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./content/UserContent";
 import { useState } from "react";
@@ -25,6 +26,7 @@ const App = () => {
             path="/order"
             element={<Order addDisplay={addDisplay} setDisplay={setDisplay} />}
           />
+          <Route path="/past-orders" element={<PastOrders />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>

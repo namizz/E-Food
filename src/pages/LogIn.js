@@ -1,7 +1,8 @@
 import Input from "../components/LogInInputs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/API";
+import { PersonInfo } from "../api/API";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -10,8 +11,21 @@ const LoginForm = () => {
     password: "",
   });
   const [load, setLoad] = useState(false);
-  const [error, setError] = useState(""); // To store error message if login fails
-
+  const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data = await PersonInfo();
+  //       setUser(data.data);
+  //       navigate("/");
+  //     } catch (error) {
+  //       console.error("Error fetching user info:", error);
+  //       navigate("/login");
+  //     }
+  //   };
+  //   fetchData();
+  // }, [setUser]);
   // Navigate to createUser route if user is new
   const SignUp = () => {
     return navigate("/signup");

@@ -74,7 +74,13 @@ const Header = ({ user }) => {
   const navigate = useNavigate();
   return (
     <div className="bg-[#ff7e0517] w-full">
-      <p className="text-[#f77d19] p-3 text-h1 text-center font-bold">E-Food</p>
+      <p className="bg-header text-[#f77d19] p-3 text-h1 text-center font-bold flex justify-center">
+        <img
+          src="https://img.icons8.com/?size=48&id=t0CwA6GDizrl&format=png"
+          className="mx-2"
+        />
+        E-Food
+      </p>
       <Profile navigate={navigate} user={user} />
     </div>
   );

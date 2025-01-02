@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import connectWebSocket from "../../socket/Socket";
 import NotificationCard from "../NotificationCard";
 
@@ -11,7 +11,8 @@ const Notifications = ({ notifications, setNotifications }) => {
 
     // Connect to WebSocket and handle incoming notifications
     connectWebSocket((newNotification) => {
-      const updatedNotifications = [...notifications, newNotification];
+      const updatedNotifications = [newNotification, ...notifications];
+      console.log("Updated notifications:", updatedNotifications);
       setNotifications(updatedNotifications);
       localStorage.setItem(
         "notifications",

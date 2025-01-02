@@ -53,6 +53,15 @@ const CartBox = ({ newOrder }) => {
       );
     }
   };
+  const cancelItem = (id) => {
+    const map = hashmap.current; // Assuming hashmap is a ref to a Map
+    if (map.has(id)) {
+      map.delete(id); // Remove the item from the map
+
+      // Update orderCart by filtering out the item with the given id
+      appendCarts((prevOrders) => prevOrders.filter((cart) => cart.id !== id));
+    }
+  };
 
   const PlaceOrder = () => {
     const orderjson = () => {
@@ -88,9 +97,23 @@ const CartBox = ({ newOrder }) => {
     ) : null;
   };
 
-  const Cancel = () => {
+  const CancelOrder = () => {
+    const handleCancelOrder = () => {
+      try {
+        hashmap.current.clear();
+        appendCarts([]); // Assuming this resets the cart display
+      } catch (error) {
+        console.error("Error canceling order:", error);
+      }
+    };
+
     return hashmap ? (
-      <div className="text-red-500 text-h3 text-center px-2 py-2">cancel</div>
+      <div
+        className="text-red-500 text-h3 py-2 text-center"
+        onClick={handleCancelOrder}
+      >
+        Cancel Order
+      </div>
     ) : null;
   };
 
@@ -105,13 +128,14 @@ const CartBox = ({ newOrder }) => {
             name={cart.name}
             quantity={cart.quantity}
             updateQuantity={updateQuantity}
+            cancelItem={cancelItem}
           />
         ))}
       </div>
-      {hashmap ? (
+      {OrderCart.length > 0 ? (
         <div className="flex justify-evenly mt-4">
           <PlaceOrder />
-          <Cancel />
+          <CancelOrder />
         </div>
       ) : (
         ""

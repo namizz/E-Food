@@ -45,23 +45,28 @@ const Items = ({
 
 const BackgroundImg2 = () => {
   return (
-    <div className="absolute z-[-10] opacity-10 w-full">
-      <img
-        className="h-[100vh] w-full object-fill"
-        src="https://i.pinimg.com/736x/f5/d9/f8/f5d9f8c8c418b21f002c51bbff5823fa.jpg"
-      />
-    </div>
+    <div
+      className="absolute z-[-10] opacity-10 w-full h-full"
+      style={{
+        backgroundImage:
+          "url('https://i.pinimg.com/736x/f5/d9/f8/f5d9f8c8c418b21f002c51bbff5823fa.jpg')",
+        backgroundRepeat: "repeat",
+        backgroundSize: "cover",
+      }}
+    ></div>
   );
 };
-
 const BackgroundImg = () => {
   return (
-    <div className="absolute z-[-10] opacity-75 w-full">
-      <img
-        className="h-[100vh] w-full object-cover"
-        src="https://i.pinimg.com/736x/d2/a7/b8/d2a7b8e3626b849ed5b81e58625cae4d.jpg"
-      />
-    </div>
+    <div
+      className="absolute z-[-10] opacity-75 w-full h-full"
+      style={{
+        backgroundImage:
+          "url('https://i.pinimg.com/736x/d2/a7/b8/d2a7b8e3626b849ed5b81e58625cae4d.jpg')",
+        backgroundRepeat: "repeat",
+        backgroundSize: "cover",
+      }}
+    ></div>
   );
 };
 
@@ -141,7 +146,7 @@ const Home = ({ addDisplay, setDisplay }) => {
         }
       }}
     >
-      <Header user={user} />
+      <Header user={user} setUser={setUser} />
       <BackgroundImg />
       <BackgroundImg2 />
       <NavBar
@@ -149,6 +154,7 @@ const Home = ({ addDisplay, setDisplay }) => {
         changeDisplay={changeDisplay}
         notifications={notifications}
         setNotifications={setNotifications}
+        user={user}
       />
       {
         user && user.role === "ROLE_ADMIN" ? (

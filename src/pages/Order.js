@@ -5,43 +5,6 @@ import OrderCard from "../components/OrderCard";
 import { orderedItems, PersonInfo, myorder } from "../api/API";
 import { useUser } from "../content/UserContent";
 
-const PastOrders = ({ user, ordered }) => {
-  return (
-    <>
-      {user && user.role === "ROLE_USER" ? (
-        <div className="border-2">
-          <p>Past Orders</p>
-        </div>
-      ) : (
-        ""
-      )}
-      {user && user.role === "ROLE_USER" ? (
-        ordered.length > 0 ? (
-          ordered.map((o) => {
-            if (o.status === "Delivered") {
-              const compositeKey = `${o.id}-${o.status}-${o.totalPrice}`; // Create a composite key
-              return (
-                <OrderCard
-                  key={compositeKey}
-                  id={o.id}
-                  items={o.items}
-                  status={o.status}
-                  price={o.totalPrice}
-                  role={user.role}
-                />
-              );
-            }
-            return null; // Return null if the order status is not "Delivered"
-          })
-        ) : (
-          <p>There is No Past Order</p>
-        )
-      ) : (
-        ""
-      )}
-    </>
-  );
-};
 const CurrentOrder = ({ user, ordered }) => {
   return (
     <>
@@ -120,10 +83,14 @@ const Order = ({ addDisplay, changeDisplay }) => {
     <div className="flex flex-col items-center  border-2">
       <Header user={user} />
       <div className="items-end w-full">
-        <NavBar selected={addDisplay} changeDisplay={changeDisplay} />
+        <NavBar
+          selected={addDisplay}
+          changeDisplay={changeDisplay}
+          user={user}
+        />
       </div>
       <CurrentOrder user={user} ordered={ordered} />
-      <PastOrders user={user} ordered={ordered} />
+      {/* <PastOrders user={user} ordered={ordered} /> */}
     </div>
   );
 };

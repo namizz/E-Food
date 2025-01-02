@@ -63,7 +63,7 @@ export const PersonInfo = async () => {
     }
 
     const data = await response.json();
-    // console.log("Fetched user data:", data);
+    console.log("Fetched user data:", data);
     return data;
   } catch (error) {
     console.error("Get User Info failed", error.message);
