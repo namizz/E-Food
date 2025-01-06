@@ -24,26 +24,21 @@ const Image = ({ url, setImage, setURL }) => {
 
   return (
     <div className="p-[0.7em] mt-0 mb-0 mr-12 ml-10" onClick={handleClick}>
-      {imageurl === null && url === null ? (
+      {!imageurl && !url ? (
         <div>
           <div className="text-sm text-gray-700 font-[600]">
             Upload image here
           </div>
 
           <img
-            src="https://img.freepik.com/premium-vector/illustration-upload_498740-5719.jpg"
+            src="https://img.icons8.com/?size=48&id=8ax09IWlr80n&format=png"
             alt="upload"
             className="w-20 ml-6 "
           />
         </div>
       ) : (
         <div className="  w-40 h-cardH absolute">
-          <img
-            src={
-              url == null ||
-              "https://img.icons8.com/?size=48&id=8ax09IWlr80n&format=png"
-            }
-          />
+          <img src={url} />
         </div>
       )}
       <input

@@ -186,7 +186,7 @@ const UpdateItem = ({ id, editmode }) => {
 
   return (
     <div
-      className="flex-col absolute top-0 left-0 right-0 bottom-0 mx-auto mb-6 pb-2 rounded-md bg-[#ffffff] bg-opacity-80 shadow-lg"
+      className="flex-col relative top-[20%] left-[25%] mx-auto p-4 pb-10 rounded-md bg-[#ffffff] shadow-lg w-[100%] min-w-[500px]"
       style={{ maxWidth: "600px", margin: "auto" }} // Ensuring center positioning
       onClick={(e) => {
         e.stopPropagation();
@@ -217,7 +217,7 @@ const UpdateItem = ({ id, editmode }) => {
           change={handleChange}
           display={required.de}
         />
-        <Image setImage={setImage} setURL={setURL} />
+        <Image url={url} setImage={setImage} setURL={setURL} />
         {url && (
           <img
             src={url}

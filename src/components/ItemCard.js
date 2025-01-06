@@ -120,8 +120,8 @@ const EditButton = ({ id, setEdit }) => {
     </div>
   );
 };
-const Item = ({ user, setEdit, ...props }) => {
-  const { setSelected, setOrder } = props;
+const Item = ({ ...props }) => {
+  const { setSelected, setOrder, setEdit, user } = props;
   const role = user !== null ? user.role : "";
   return (
     <div

@@ -6,13 +6,14 @@ import NewItem from "../components/containers/NewItem";
 import { useUser } from "../content/UserContent"; // Assuming this is your user context or state management
 import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
 import ItemsBox from "../components/containers/ItemBox";
-import DisplayItem from "../components/DisplayItem";
+import DisplayItem from "../components/containers/DisplayItem";
 import CartBox from "../components/containers/CartBox";
 import Notifications from "../components/containers/Notification";
 import { useNavigate } from "react-router-dom";
 import UpdateItem from "../components/containers/UpdateItem";
 import Report from "../components/Report";
 import { BackgroundImg, BackgroundImg2 } from "../components/Background";
+import OrderNotification from "../components/containers/OrderNotification";
 
 // import OrderNotification from "../components/containers/OrderNotification";
 
@@ -61,7 +62,7 @@ const Body = ({ user, setSelected, selected, setOrder, editmode, setEdit }) => {
         editmode={editmode}
       />
       {selected ? (
-        <div className="w-[25%] border-2 border-red-300">
+        <div className="w-[25%]">
           <DisplayItem user={user} props={selected} />
         </div>
       ) : null}
@@ -131,31 +132,25 @@ const Home = ({ addDisplay, setDisplay }) => {
         setNotifications={setNotifications}
         user={user}
       />
-      {
-        user && user.role === "ROLE_ADMIN" ? (
-          <>
-            <div className="flex items-center justify-center w-full">
-              <Report />
-            </div>
-            <Notifications
-              notifications={notifications}
-              setNotifications={setNotifications}
-            />
-            <NewItem display={addDisplay} />
-          </>
-        ) : (
-          ""
-        )
-        //  (
-        //   <>
-        //     <OrderNotification
-        //       ordNotify={OrdNotify}
-        //       setOrdNotify={setOrdNotify}
-        //       user={user}
-        //     ></OrderNotification>
-        //   </>
-        // )
-      }
+      {user && user.role === "ROLE_USER" ? (
+        <OrderNotification user={user} />
+      ) : (
+        ""
+      )}
+      {user && user.role === "ROLE_ADMIN" ? (
+        <>
+          <div className="flex items-center justify-center w-full">
+            <Report />
+          </div>
+          <Notifications
+            notifications={notifications}
+            setNotifications={setNotifications}
+          />
+          <NewItem display={addDisplay} />
+        </>
+      ) : (
+        ""
+      )}
       <Body
         user={user}
         selected={selected}

@@ -8,10 +8,14 @@ const HomeBar = ({
   isActive,
   setActive,
 }) => {
+  const location = useLocation();
+
   return (
     <li
       className={`cursor-pointer ${
-        isActive ? "bg-[#33174C] text-white rounded-lg px-1 py-0.5" : ""
+        isActive && location.pathname === "/"
+          ? "bg-[#33174C] text-white rounded-lg px-1 py-0.5"
+          : ""
       }`}
       onClick={() => {
         if (selected && selected !== "none") {
@@ -37,7 +41,9 @@ const OrderBar = ({
   return (
     <li
       className={`cursor-pointer ${
-        isActive ? "bg-[#33174C] text-white rounded-lg px-1 py-0.5" : ""
+        location.pathname === "/order"
+          ? "bg-[#33174C] text-white rounded-lg px-1 py-0.5"
+          : ""
       }`}
       onClick={() => {
         setActive("order"); // Update activeTab immediately
@@ -81,10 +87,13 @@ const NewFood = ({ changeDisplay, isActive, setActive, disabled }) => {
 };
 
 const PastOrdersBar = ({ navigate, isActive, setActive }) => {
+  const location = useLocation();
   return (
     <li
       className={`cursor-pointer ${
-        isActive ? "bg-[#33174C] text-white rounded-lg px-1 py-0.5" : ""
+        location.pathname === "/past-orders"
+          ? "bg-[#33174C] text-white rounded-lg px-1 py-0.5"
+          : ""
       }`}
       onClick={() => {
         setActive("pastOrders");
