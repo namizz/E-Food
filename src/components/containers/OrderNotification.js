@@ -15,12 +15,10 @@ const OrderNotification = ({ user }) => {
         JSON.parse(localStorage.getItem("notifications")) || [];
       setNotifications(storedNotifications);
 
-      // Connect to WebSocket and handle incoming notifications
       connectWebSocket((newNotification) => {
         const updatedNotifications = [newNotification, ...notifications];
         console.log("Updated notifications:", updatedNotifications);
 
-        // Update state and local storage
         setNotifications(updatedNotifications);
         localStorage.setItem(
           "notifications",

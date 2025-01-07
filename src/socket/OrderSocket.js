@@ -15,17 +15,15 @@ const connectWebSocket = (setNotification, userId) => {
     onConnect: () => {
       console.log("Connected to WebSocket");
 
-      // Subscribe to the topic specific to the user
       const userTopic = `/topic/orders/user/${userId}`;
       client.subscribe(userTopic, (message) => {
         const notification = JSON.parse(message.body);
-        console.log("Notification received:", notification);
+        console.log("Notification received:", message.body);
 
-        // Update state with the notification details
         setNotification({
-          message: notification.message, // "Order status updated"
-          orderId: notification.orderId, // The order ID
-          status: notification.status, // The new status
+          message: notification.message,
+          orderId: notification.orderId,
+          status: notification.status,
         });
       });
     },
@@ -34,7 +32,7 @@ const connectWebSocket = (setNotification, userId) => {
     },
   });
 
-  client.activate(); // Start the WebSocket connection
+  client.activate();
 };
 
 export default connectWebSocket;
