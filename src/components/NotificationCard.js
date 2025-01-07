@@ -1,4 +1,4 @@
-const NotificationCard = ({ message, onRespond, onClick }) => {
+const NotificationCard = ({ message, onRespond, onClick, status }) => {
   return (
     <div
       className="flex flex-col w-60 sm:w-72 text-[10px] sm:text-xs z-50 my-0.5 group"
@@ -24,7 +24,7 @@ const NotificationCard = ({ message, onRespond, onClick }) => {
           </div>
           <div>
             <p className="text-orange-400 group-hover:text-blue-800">
-              Message Sent
+              {status || "Message Sent"}
             </p>
             <p className="text-gray-900 group-hover:text-orange-600 text-h5">
               {message}

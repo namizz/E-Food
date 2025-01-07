@@ -91,16 +91,16 @@ const Home = ({ addDisplay, setDisplay }) => {
     fetchData();
   }, [setUser]);
 
-  useEffect(() => {
-    const fetchFood = async () => {
-      try {
-        console.log(await getFood());
-      } catch (error) {
-        console.log("Can't fetch food");
-      }
-    };
-    fetchFood();
-  }, []);
+  // useEffect(() => {
+  //   const fetchFood = async () => {
+  //     try {
+  //       await getFood();
+  //     } catch (error) {
+  //       console.log("Can't fetch food");
+  //     }
+  //   };
+  //   fetchFood();
+  // }, []);
 
   const changeDisplay = () => {
     console.log("clicked new item");
@@ -130,22 +130,28 @@ const Home = ({ addDisplay, setDisplay }) => {
         changeDisplay={changeDisplay}
         notifications={notifications}
         setNotifications={setNotifications}
+        OrdNotify={OrdNotify}
+        setOrdNotify={setOrdNotify}
         user={user}
       />
       {user && user.role === "ROLE_USER" ? (
-        <OrderNotification user={user} />
+        <OrderNotification
+          user={user}
+          OrdNotify={OrdNotify}
+          setOrdNotify={setOrdNotify}
+        />
       ) : (
         ""
       )}
       {user && user.role === "ROLE_ADMIN" ? (
         <>
-          <div className="flex items-center justify-center w-full">
-            <Report />
-          </div>
           <Notifications
             notifications={notifications}
             setNotifications={setNotifications}
           />
+          <div className="flex items-center justify-center w-full">
+            <Report />
+          </div>
           <NewItem display={addDisplay} />
         </>
       ) : (

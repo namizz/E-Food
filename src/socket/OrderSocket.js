@@ -13,18 +13,15 @@ const connectWebSocket = (setNotification, userId) => {
     webSocketFactory: () => new SockJS(socketUrl),
     reconnectDelay: 5000,
     onConnect: () => {
-      console.log("Connected to WebSocket");
+      console.log("Order to WebSocket");
 
+      // Subscribe to the user-specific topic
       const userTopic = `/topic/orders/user/${userId}`;
       client.subscribe(userTopic, (message) => {
-        const notification = JSON.parse(message.body);
         console.log("Notification received:", message.body);
+        const notification = JSON.parse(message.body);
 
-        setNotification({
-          message: notification.message,
-          orderId: notification.orderId,
-          status: notification.status,
-        });
+        setNotification(notification);
       });
     },
     onStompError: (error) => {

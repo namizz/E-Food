@@ -1,58 +1,56 @@
 import React, { useEffect, useState } from "react";
-import connectWebSocket from "../../socket/Socket";
+import connectWebSocket from "../../socket/OrderSocket";
 import NotificationCard from "../NotificationCard";
 
-const OrderNotification = ({ user }) => {
-  const [notifications, setNotifications] = useState([]);
-
+const OrderNotification = ({ OrdNotify, setOrdNotify, user }) => {
   useEffect(() => {
-    // Check if user and user.id are available
-    if (user?.id) {
-      const userId = user.id;
-
-      // Load notifications from local storage on mount
-      const storedNotifications =
-        JSON.parse(localStorage.getItem("notifications")) || [];
-      setNotifications(storedNotifications);
-
-      connectWebSocket((newNotification) => {
-        const updatedNotifications = [newNotification, ...notifications];
-        console.log("Updated notifications:", updatedNotifications);
-
-        setNotifications(updatedNotifications);
-        localStorage.setItem(
-          "notifications",
-          JSON.stringify(updatedNotifications)
-        );
-      }, userId);
+    if (!user || !user.id) {
+      console.error("User ID not found. Cannot connect to WebSocket.");
+      return;
     }
-  }, [user]); // Reconnect if user changes
+    // Connect to WebSocket using the user ID
+    connectWebSocket((newNotification) => {
+      console.log("New notification received:", newNotification);
+      const updatedNotifications = [newNotification, ...OrdNotify];
+      setOrdNotify(updatedNotifications);
+      localStorage.setItem(
+        "Onotifications",
+        JSON.stringify(updatedNotifications)
+      );
+    }, user.id);
+
+    // Load notifications from local storage on mount
+    const storedNotifications =
+      JSON.parse(localStorage.getItem("Onotifications")) || [];
+    setOrdNotify(storedNotifications);
+  }, [user]);
 
   const handleResponse = (response, index) => {
     console.log("User response:", response);
 
     // Clear the notification after responding
-    const updatedNotifications = notifications.filter((_, i) => i !== index);
-    setNotifications(updatedNotifications);
-    localStorage.setItem("notifications", JSON.stringify(updatedNotifications));
+    const updatedNotifications = OrdNotify.filter((_, i) => i !== index);
+    setOrdNotify(updatedNotifications);
+    localStorage.setItem(
+      "Onotifications",
+      JSON.stringify(updatedNotifications)
+    );
   };
 
   const handleNotificationClick = (index) => {
-    // Mark notification as seen (you can customize this further)
-    console.log("Notification seen:", notifications[index]);
-
-    // Optionally remove or modify the notification
+    console.log("Notification seen:", OrdNotify[index]);
     handleResponse(null, index); // Remove it after clicking
   };
 
   return (
     <div className="absolute flex flex-col-reverse right-10">
-      {notifications.map((notification, index) => (
+      {OrdNotify.map((notification, index) => (
         <NotificationCard
           key={index}
-          message={notification} // Display the message part
+          status={notification.status || "Pending"}
+          message={notification.message || notification}
           onRespond={(response) => handleResponse(response, index)}
-          onClick={() => handleNotificationClick(index)} // Pass click handler
+          onClick={() => handleNotificationClick(index)}
         />
       ))}
     </div>

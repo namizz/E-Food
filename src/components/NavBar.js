@@ -34,10 +34,14 @@ const OrderBar = ({
   navigate,
   notifications,
   setNotifications,
+  OrdNotify,
+  setOrdNotify,
   isActive,
   setActive,
+  user,
 }) => {
   const location = useLocation();
+  console.log("notification", notifications, OrdNotify);
   return (
     <li
       className={`cursor-pointer ${
@@ -48,19 +52,36 @@ const OrderBar = ({
       onClick={() => {
         setActive("order"); // Update activeTab immediately
         if (location.pathname !== "/order" && notifications) {
-          setNotifications([]);
-          localStorage.setItem("notifications", JSON.stringify([]));
+          if (user && user.role === "ROLE_ADMIN") {
+            setNotifications([]);
+            localStorage.setItem("notifications", JSON.stringify([]));
+          } else {
+            setOrdNotify([]);
+            localStorage.setItem("Onotifications", JSON.stringify([]));
+          }
           navigate("/order"); // Navigate after updating state
         }
       }}
     >
-      {notifications && notifications.length > 0 ? (
+      {user && user.id === "ROLE_ADMIN" ? (
+        // If user is admin, show notifications
+        notifications && notifications.length > 0 ? (
+          <div
+            className={`bg-red-500 absolute text-notif ml-[1.9vw] -mt-[0.3vw] text-white min-w-5 text-center ${
+              notifications ? "rounded-full" : "rounded-md"
+            }`}
+          >
+            {notifications.length || "new"}
+          </div>
+        ) : null
+      ) : // If user is not admin, show OrdNotify
+      OrdNotify && OrdNotify.length > 0 ? (
         <div
           className={`bg-red-500 absolute text-notif ml-[1.9vw] -mt-[0.3vw] text-white min-w-5 text-center ${
-            notifications ? "rounded-full" : "rounded-md"
+            OrdNotify ? "rounded-full" : "rounded-md"
           }`}
         >
-          {notifications.length || "new"}
+          {OrdNotify.length || "new"}
         </div>
       ) : null}
       Order
@@ -111,6 +132,8 @@ const NavBar = ({
   setNotifications,
   selected,
   user,
+  OrdNotify,
+  setOrdNotify,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -128,9 +151,12 @@ const NavBar = ({
             setActive={setActiveTab}
           />
           <OrderBar
+            user={user}
             navigate={navigate}
             notifications={notifications || null}
             setNotifications={setNotifications || null}
+            OrdNotify={OrdNotify || null}
+            setOrdNotify={setOrdNotify || null}
             isActive={activeTab === "order"}
             setActive={setActiveTab}
           />
