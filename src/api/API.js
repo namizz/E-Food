@@ -63,7 +63,6 @@ export const PersonInfo = async () => {
     }
 
     const data = await response.json();
-    console.log("Fetched user data:", data);
     return data;
   } catch (error) {
     console.error("Get User Info failed", error.message);
@@ -161,7 +160,6 @@ export const orderedItems = async () => {
       throw new Error(errorData.message || "Can't fetch orderd Item");
     }
     const data = await response.json();
-    console.log("Fetch the ordered Item");
     return data.data;
   } catch (error) {
     console.error("Error fetching the order:", error.message);

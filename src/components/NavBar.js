@@ -41,7 +41,6 @@ const OrderBar = ({
   user,
 }) => {
   const location = useLocation();
-  console.log("notification", notifications, OrdNotify);
   return (
     <li
       className={`cursor-pointer ${
@@ -121,7 +120,7 @@ const PastOrdersBar = ({ navigate, isActive, setActive }) => {
         navigate("/past-orders");
       }}
     >
-      Past Orders
+      History
     </li>
   );
 };

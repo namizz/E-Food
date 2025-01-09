@@ -92,8 +92,8 @@ const UpdateItem = ({ id, editmode }) => {
       try {
         // Assume the update functionality uses a different API method, for example `UpdateFood`
         const result = await updateItem(Info.id, { id, ...Info }); // Replace with actual update function if different
-        console.log(result);
-        // window.location.reload();
+        // console.log(result);
+        window.location.reload();
       } catch (error) {
         console.error("Error while updating food:", error);
       }

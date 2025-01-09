@@ -43,6 +43,7 @@ const ItemsBox = ({ user, setSelected, setOrder, setEdit }) => {
                 name={food.name}
                 description={food.description}
                 price={food.price}
+                quantity={food.quantity}
                 src={food.imageUrl}
                 isAvailable={food.isAvailable}
                 user={user}

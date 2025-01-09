@@ -33,15 +33,15 @@ const OrderedItems = ({ items }) => {
   );
 };
 
-const OrderStatusDiv = () => {
-  return (
+const OrderStatusDiv = ({ ps }) => {
+  return !ps ? (
     <div className="bg-gradient-to-r from-[#FF9843] to-[#FF5353] px-1.5 rounded-xl text-white text-hm inline-block my-2">
       Order Status
     </div>
-  );
+  ) : null;
 };
 
-const OrderStatus = ({ id, initialStatus, role, reload }) => {
+const OrderStatus = ({ id, initialStatus, role }) => {
   const [status, setStatus] = useState(initialStatus); // Manage status state
 
   const state = ["Pending", "Accepted", "Preparing", "READY", "Delivered"];
@@ -134,16 +134,16 @@ const changeStatus = async ({ id, status }) => {
   }
 };
 
-const OrderCard = ({ price, id, items, status, role }) => {
+const OrderCard = ({ price, id, items, status, role, ps }) => {
   return (
     <div
       className={`${
         status === "Delivered" ? "bg-gray-300" : "bg-[#FFFDB5]"
       } border-[1px] border-black w-[36%] relative p-3 px-8 my-1`}
     >
-      <Cancel />
+      {!ps ? <Cancel /> : null}
       <OrderedItems items={items || []} />
-      <OrderStatusDiv />
+      <OrderStatusDiv ps={ps} />
 
       <OrderStatus initialStatus={status} id={id} role={role} />
     </div>

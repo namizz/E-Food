@@ -93,7 +93,7 @@ const LoginForm = () => {
         className="flex flex-col items-center bg-gray-800 bg-opacity-30 backdrop-blur-sm p-8 rounded-lg w-full max-w-sm"
         onSubmit={handleSubmit}
       >
-        <p className="text-[#2f678d] text-4xl mb-12 font-bold font-jolly-lodger">
+        <p className="text-[#61b5ee] text-4xl mb-12 font-bold font-jolly-lodger">
           E-Food LogIn
         </p>
         <Input

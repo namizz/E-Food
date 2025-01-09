@@ -9,7 +9,7 @@ import { BackgroundImg, BackgroundImg2 } from "../components/Background";
 const CurrentOrder = ({ user, ordered }) => {
   return (
     <>
-      <div className="border-2">
+      <div className="text-h3 font-serif">
         <p>Current Orders</p>
       </div>
 
@@ -81,7 +81,7 @@ const Order = ({ addDisplay, changeDisplay }) => {
     }
   }, [user]); // Run this effect whenever 'user' state changes
   return (
-    <div className="flex flex-col items-center  border-2">
+    <div className="flex flex-col items-center ">
       <Header user={user} />
       <BackgroundImg />
       <BackgroundImg2 />

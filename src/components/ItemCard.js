@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { deleteItem } from "../api/API";
 import { updateAvailability } from "../api/API";
-const Name = ({ name }) => {
+const Name = ({ name, quantity, role }) => {
   return (
-    <div className="bg-gradient-to-br from-[#ffae6d] to-[#f87f1c] p-1 text-white text-h3 px-5 font-semibold">
+    <div className="flex bg-gradient-to-br from-[#ffae6d] to-[#f87f1c] p-1 text-white text-h3 px-5 font-semibold">
       {name || "Special Pizza"}
+      {role === "ROLE_ADMIN" ? (
+        <span className="text-h5 text-[#139219b4]"> {`(${quantity})`} </span>
+      ) : null}
     </div>
   );
 };
@@ -24,7 +27,7 @@ const Image = ({ image }) => {
 };
 const Price = ({ price }) => {
   return (
-    <div className="relative bottom-price right-[-70%] bg-white bg-opacity-40 text-h4 font-bold text-[#7c49be] p-1 rounded-l-2xl pl-3">
+    <div className="relative bottom-price right-[-70%] bg-white bg-opacity-70 text-h4 font-bold text-[#4b49be] p-1 rounded-l-2xl pl-3">
       <p>
         {price || "888"}
         <span className="text-h5">ETB</span>
@@ -137,7 +140,7 @@ const Item = ({ ...props }) => {
       ) : null}
       <Image image={props.src} />
       <div className="relative">
-        <Name name={props.name} />
+        <Name name={props.name} quantity={props.quantity} role={role} />
         <Desciption description={props.description} />
         {role !== "ROLE_ADMIN" ? (
           <Order setOrder={setOrder} props={props} />

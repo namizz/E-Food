@@ -42,7 +42,7 @@ const PastOrders = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center border-2">
+    <div className="flex flex-col items-center">
       <Header user={user} />
       <BackgroundImg />
       <BackgroundImg2 />
@@ -50,8 +50,8 @@ const PastOrders = () => {
         <NavBar user={user} />
       </div>
 
-      <div className="border-2  text-center my-4">
-        <h2 className="text-lg font-bold">Past Orders</h2>
+      <div className="text-center">
+        <h2 className="text-lg font-light">History</h2>
       </div>
 
       {user && user.role === "ROLE_USER" ? (
@@ -68,6 +68,7 @@ const PastOrders = () => {
                     status={order.status}
                     price={order.totalPrice}
                     role={user.role}
+                    ps={true}
                   />
                 );
               }
