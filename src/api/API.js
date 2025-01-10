@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 export const signup = async (Info) => {
   try {
     const response = await fetch(
