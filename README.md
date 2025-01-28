@@ -1,3 +1,8 @@
+# ADMIN phone number = 0991065050, password= naomi
+# For User sign up
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
