@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { deleteItem } from "../api/API";
 import { updateAvailability } from "../api/API";
@@ -42,20 +43,34 @@ const Desciption = ({ description }) => {
     </div>
   );
 };
-const Order = ({ setOrder, props }) => {
+
+const Order = ({ user, setOrder, props }) => {
+  const navigate = useNavigate(); // Hook to navigate between pages
+
+  const handleOrderClick = (event) => {
+    event.stopPropagation();
+
+    // If user is null, redirect to the login page
+    if (!user) {
+      navigate("/login"); // Replace "/login" with your actual login route
+      return;
+    }
+
+    // Otherwise, set the order
+    setOrder(null);
+    setOrder(props);
+  };
+
   return (
     <button
       className="m-auto w-full bg-gradient-to-br from-[#FFAA00] to-[#FF7300] text-white text-h4 rounded-xl py-1"
-      onClick={(event) => {
-        event.stopPropagation();
-        setOrder(null);
-        setOrder(props);
-      }}
+      onClick={handleOrderClick}
     >
       Order
     </button>
   );
 };
+
 const Available = ({ id, available }) => {
   const [isAvailable, setIsAvailable] = useState(available);
 
@@ -143,7 +158,7 @@ const Item = ({ ...props }) => {
         <Name name={props.name} quantity={props.quantity} role={role} />
         <Desciption description={props.description} />
         {role !== "ROLE_ADMIN" ? (
-          <Order setOrder={setOrder} props={props} />
+          <Order user={user} setOrder={setOrder} props={props} />
         ) : (
           <Available id={props.id} available={props.isAvailable} />
         )}

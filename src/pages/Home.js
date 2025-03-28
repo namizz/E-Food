@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import ItemCard from "../components/ItemCard";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import NewItem from "../components/containers/NewItem";
 import { useUser } from "../content/UserContent"; // Assuming this is your user context or state management
-// import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
+import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
 import ItemsBox from "../components/containers/ItemBox";
 import DisplayItem from "../components/containers/DisplayItem";
 import CartBox from "../components/containers/CartBox";
@@ -72,6 +72,9 @@ const Body = ({ user, setSelected, selected, setOrder, editmode, setEdit }) => {
 
 const Home = ({ addDisplay, setDisplay }) => {
   const { user, setUser } = useUser();
+  useEffect(() => {
+    console.log("user", user);
+  }, [setUser]);
   const [selected, setSelected] = useState(null); // About selected element
   const [newOrder, setOrder] = useState(null);
   const [notifications, setNotifications] = useState([]); //notifications
@@ -80,18 +83,18 @@ const Home = ({ addDisplay, setDisplay }) => {
 
   //if the user does login go to login page
   // const navigate = useNavigate();
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await PersonInfo();
-  //       setUser(data.data);
-  //     } catch (error) {
-  //       console.error("Error fetching user info:", error);
-  //       navigate("/login");
-  //     }
-  //   };
-  //   fetchData();
-  // }, [setUser]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await PersonInfo();
+        setUser(data.data);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        // navigate("/login");
+      }
+    };
+    fetchData();
+  }, [setUser]);
 
   // useEffect(() => {
   //   const fetchFood = async () => {

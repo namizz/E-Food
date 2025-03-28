@@ -37,7 +37,8 @@ const Profile = ({ navigate, user }) => {
     try {
       const response = await logout();
       console.log(response);
-      navigate("/login");
+      localStorage.removeItem("auth_token");
+      // navigate("/login");
     } catch (error) {
       console.log("Can't Log out");
     }
@@ -66,6 +67,16 @@ const Profile = ({ navigate, user }) => {
         />
       </div>
       {showButtons && <Actions onEdit={handleEdit} onLogout={handleLogout} />}
+      {!user ? (
+        <button
+          className="bg-orange-400 text-white py-2 px-4 rounded-lg absolute bottom-2 right-40"
+          onClick={() => navigate("/login")}
+        >
+          Log In
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
