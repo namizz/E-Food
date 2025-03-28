@@ -1,7 +1,7 @@
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
-const socketUrl = "https://efood-brvf.onrender.com/ws"; // Backend URL
+const socketUrl = "https://efood-backend-zv00.onrender.com/ws"; // Backend URL
 const topic = "/topic/admin";
 
 const connectWebSocket = (setNotification) => {

@@ -115,7 +115,7 @@ const OrderStatus = ({ id, initialStatus, role }) => {
 const changeStatus = async ({ id, status }) => {
   try {
     const response = await fetch(
-      `https://efood-brvf.onrender.com/api/orders/status/${id}?status=${status}`,
+      `https://efood-backend-zv00.onrender.com/api/orders/status/${id}?status=${status}`,
       {
         method: "PUT",
         credentials: "include",

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import ItemCard from "../components/ItemCard";
+import React, { useState } from "react";
+// import ItemCard from "../components/ItemCard";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import NewItem from "../components/containers/NewItem";
 import { useUser } from "../content/UserContent"; // Assuming this is your user context or state management
-import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
+// import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
 import ItemsBox from "../components/containers/ItemBox";
 import DisplayItem from "../components/containers/DisplayItem";
 import CartBox from "../components/containers/CartBox";
 import Notifications from "../components/containers/Notification";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import UpdateItem from "../components/containers/UpdateItem";
 import Report from "../components/Report";
 import { BackgroundImg, BackgroundImg2 } from "../components/Background";
@@ -77,19 +77,21 @@ const Home = ({ addDisplay, setDisplay }) => {
   const [notifications, setNotifications] = useState([]); //notifications
   const [OrdNotify, setOrdNotify] = useState([]);
   const [editmode, setEdit] = useState(0);
-  const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await PersonInfo();
-        setUser(data.data);
-      } catch (error) {
-        console.error("Error fetching user info:", error);
-        navigate("/login");
-      }
-    };
-    fetchData();
-  }, [setUser]);
+
+  //if the user does login go to login page
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data = await PersonInfo();
+  //       setUser(data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching user info:", error);
+  //       navigate("/login");
+  //     }
+  //   };
+  //   fetchData();
+  // }, [setUser]);
 
   // useEffect(() => {
   //   const fetchFood = async () => {

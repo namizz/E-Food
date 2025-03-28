@@ -1,7 +1,7 @@
 export const signup = async (Info) => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/auth/signup",
+      "https://efood-backend-zv00.onrender.com/auth/signup",
       {
         headers: {
           "Content-Type": "application/json",
@@ -23,14 +23,17 @@ export const signup = async (Info) => {
 };
 export const login = async (Info) => {
   try {
-    const response = await fetch("https://efood-brvf.onrender.com/auth/login", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(Info),
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://efood-backend-zv00.onrender.com/auth/login",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(Info),
+        credentials: "include",
+      }
+    );
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Failed to log in");
@@ -45,7 +48,7 @@ export const login = async (Info) => {
 export const PersonInfo = async () => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/api/users/me",
+      "https://efood-backend-zv00.onrender.com/api/users/me",
       {
         headers: {
           "Content-Type": "application/json",
@@ -70,11 +73,14 @@ export const PersonInfo = async () => {
 
 export const AddFood = async (formData) => {
   try {
-    const response = await fetch("https://efood-brvf.onrender.com/api/foods", {
-      method: "POST",
-      body: formData, // Send formData directly
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://efood-backend-zv00.onrender.com/api/foods",
+      {
+        method: "POST",
+        body: formData, // Send formData directly
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -91,13 +97,16 @@ export const AddFood = async (formData) => {
 
 export const getFood = async () => {
   try {
-    const response = await fetch("https://efood-brvf.onrender.com/api/foods", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://efood-backend-zv00.onrender.com/api/foods",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        credentials: "include",
+      }
+    );
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Failed to get all food");
@@ -109,7 +118,7 @@ export const getFood = async () => {
   }
 };
 export const orderFood = async (arr) => {
-  const url = "https://efood-brvf.onrender.com/api/orders";
+  const url = "https://efood-backend-zv00.onrender.com/api/orders";
 
   try {
     // Wrapping `arr` into the required structure
@@ -144,7 +153,7 @@ export const orderFood = async (arr) => {
 export const orderedItems = async () => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/api/orders/new",
+      "https://efood-backend-zv00.onrender.com/api/orders/new",
       {
         headers: {
           "Content-Type": "application/json",
@@ -166,13 +175,16 @@ export const orderedItems = async () => {
 };
 export const myorder = async () => {
   try {
-    const response = await fetch("https://efood-brvf.onrender.com/api/orders", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://efood-backend-zv00.onrender.com/api/orders",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
+        credentials: "include",
+      }
+    );
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Can't fetch orderd Item");
@@ -188,7 +200,7 @@ export const myorder = async () => {
 export const changeStatus = async ({ id, status }) => {
   try {
     const response = await fetch(
-      `https://efood-brvf.onrender.com/api/orders/status/${id}?status=${status}`,
+      `https://efood-backend-zv00.onrender.com/api/orders/status/${id}?status=${status}`,
       {
         method: "PUT",
         credentials: "include",
@@ -210,7 +222,7 @@ export const changeStatus = async ({ id, status }) => {
 export const getItemById = async (id) => {
   try {
     const response = await fetch(
-      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
       {
         credentials: "include",
       }
@@ -228,7 +240,7 @@ export const getItemById = async (id) => {
 //   console.log(id, Info);
 //   try {
 //     const response = await fetch(
-//       `https://efood-brvf.onrender.com/api/foods/${id}`,
+//       `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
 //       {
 //         headers: {
 //           "Content-Type": "application/json",
@@ -251,7 +263,7 @@ export const updateItem = async (id, info) => {
   console.log(id, info);
   try {
     const response = await fetch(
-      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
       {
         method: "PUT", // Correct placement of method
         headers: {
@@ -276,7 +288,7 @@ export const deleteItem = async (id) => {
   console.log(`Deleting item with ID: ${id}`);
   try {
     const response = await fetch(
-      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
       {
         method: "DELETE", // Use DELETE method
         credentials: "include", // Include credentials (cookies, authorization headers, etc.)
@@ -297,7 +309,7 @@ export const deleteItem = async (id) => {
 export const logout = async () => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/api/users/logout",
+      "https://efood-backend-zv00.onrender.com/api/users/logout",
       {
         headers: {
           "Content-Type": "application/json",
@@ -319,7 +331,7 @@ export const logout = async () => {
 export const newOrder = async () => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/api/orders/new",
+      "https://efood-backend-zv00.onrender.com/api/orders/new",
       {
         headers: {
           "Content-Type": "application/json",
@@ -340,7 +352,7 @@ export const newOrder = async () => {
 export const dailyOrder = async () => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/api/orders/daily",
+      "https://efood-backend-zv00.onrender.com/api/orders/daily",
       {
         headers: {
           "Content-Type": "application/json",
@@ -361,7 +373,7 @@ export const dailyOrder = async () => {
 export const weeklyOrder = async () => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/api/orders/weekly",
+      "https://efood-backend-zv00.onrender.com/api/orders/weekly",
       {
         headers: {
           "Content-Type": "application/json",
@@ -382,7 +394,7 @@ export const weeklyOrder = async () => {
 export const monthlyOrder = async () => {
   try {
     const response = await fetch(
-      "https://efood-brvf.onrender.com/api/orders/monthly",
+      "https://efood-backend-zv00.onrender.com/api/orders/monthly",
       {
         headers: {
           "Content-Type": "application/json",
@@ -405,7 +417,7 @@ export const updateAvailability = async (id, value) => {
   console.log(`Updating availability for ID: ${id}, Current Value: ${value}`);
   try {
     const response = await fetch(
-      `https://efood-brvf.onrender.com/api/foods/${id}`,
+      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
       {
         method: "PUT", // Use PUT method
         headers: {
