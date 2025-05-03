@@ -18,11 +18,11 @@ const App = () => {
       <UserProvider>
         <Routes>
           <Route
-            path="/"
+            path="/intro"
             element={<Intro addDisplay={addDisplay} setDisplay={setDisplay} />}
           />
           <Route
-            path="/home"
+            path="/"
             element={<Home addDisplay={addDisplay} setDisplay={setDisplay} />}
           />
           <Route path="/login" element={<LoginPage />} />
