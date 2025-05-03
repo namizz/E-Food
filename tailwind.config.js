@@ -22,6 +22,8 @@ module.exports = {
     "./src/components/Cart.js",
     "./src/components/container/Notification.js",
     "./src/components/NotificationCard.js",
+    "./src/components/MagicButton.tsx",
+    "./src/pages/Intro.jsx",
   ],
   theme: {
     extend: {
@@ -53,6 +55,7 @@ module.exports = {
         h5: "clamp(10px, 1.1vw, 14px)",
         hm: "clamp(10px,1.25vw, 16px)",
         notif: "clamp(5px,0.8vw,12px)",
+        fluid: "clamp(3rem, 10vw, 130px)",
       },
       backgroundImage: {
         yellowGradient: "linear-gradient(to top-right, #ffd900, #ffdd00)",

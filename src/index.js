@@ -9,6 +9,7 @@ import PastOrders from "./pages/PastOrder";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./content/UserContent";
 import { useState } from "react";
+import Intro from "./pages/Intro";
 
 const App = () => {
   const [addDisplay, setDisplay] = useState("none"); // About new food
@@ -18,6 +19,10 @@ const App = () => {
         <Routes>
           <Route
             path="/"
+            element={<Intro addDisplay={addDisplay} setDisplay={setDisplay} />}
+          />
+          <Route
+            path="/home"
             element={<Home addDisplay={addDisplay} setDisplay={setDisplay} />}
           />
           <Route path="/login" element={<LoginPage />} />
