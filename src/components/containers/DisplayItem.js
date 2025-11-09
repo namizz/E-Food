@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUser } from "../../content/UserContent";
+// import { useUser } from "../../content/UserContent";
 import { deleteItem, updateAvailability } from "../../api/API"; // Assuming these API functions exist
 
 const Name_Price = ({ name, price }) => {
@@ -114,7 +114,10 @@ const EditButton = ({ id, setEdit }) => {
         className="w-6 h-6 absolute top-1 right-[16%]"
         onClick={handleDelete}
       >
-        <img src="https://img.icons8.com/?size=48&id=w2fdYXQKgx1b&format=png" />
+        <img
+          src="https://img.icons8.com/?size=48&id=w2fdYXQKgx1b&format=png"
+          alt="edit"
+        />
       </div>
       <div
         className="w-8 h-8 absolute right-[5%]"
@@ -124,7 +127,10 @@ const EditButton = ({ id, setEdit }) => {
           setEdit(id);
         }}
       >
-        <img src="https://img.icons8.com/?size=80&id=95043&format=png" />
+        <img
+          src="https://img.icons8.com/?size=80&id=95043&format=png"
+          alt="delete"
+        />
       </div>
     </div>
   );
