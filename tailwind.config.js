@@ -28,11 +28,11 @@ module.exports = {
   theme: {
     extend: {
       width: {
-        cardL: "clamp(10px, 25vw, 300px)",
+        cardL: "clamp(220px, 25vw, 300px)",
         cart: "clamp(250px, 33vw, 420px)",
       },
       height: {
-        cardH: "clamp(10px, 14vw, 170px)",
+        cardH: "clamp(120px, 14vw, 170px)",
         display: "clamp(10px, 25vw, 270px)",
         cart: "clamp(57px,7.2vw,85px)",
       },
@@ -52,7 +52,7 @@ module.exports = {
         h2: "clamp(10px,2.3vw, 30px)",
         h3: "clamp(10px, 2vw, 23px)",
         h4: "clamp(10px, 1.4vw, 18px)",
-        h5: "clamp(10px, 1.1vw, 14px)",
+        h5: "clamp(10px, 1.2vw, 14px)",
         hm: "clamp(10px,1.25vw, 16px)",
         notif: "clamp(5px,0.8vw,12px)",
         fluid: "clamp(3rem, 10vw, 130px)",

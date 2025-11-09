@@ -22,7 +22,7 @@ const Name_Price = ({ name, price }) => {
 
 const Image = ({ image }) => {
   return (
-    <div className="w-full h-display p-1 pb-0">
+    <div className="w-full h-48 sm:h-56 md:h-64 lg:h-200 p-1 pb-0">
       <img
         className="w-full h-full object-cover rounded-t-3xl"
         src={
@@ -137,7 +137,7 @@ const DisplayItem = ({ ...props }) => {
 
   return (
     <div
-      className="m-4 rounded-3xl shadow-xl overflow-hidden bg-white relative h-full"
+      className="max-w-sm rounded-3xl shadow-xl overflow-hidden bg-white relative pb-4"
       onClick={(e) => {
         e.stopPropagation();
         setSelected(null);

@@ -1,15 +1,14 @@
+const BACKEND_URL = process.env.REACT_APP_BASE_URL;
+
 export const signup = async (Info) => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/auth/signup",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(Info),
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/auth/signup`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(Info),
+    });
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Failed to sign up");
@@ -21,19 +20,17 @@ export const signup = async (Info) => {
     throw error;
   }
 };
+
 export const login = async (Info) => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/auth/login",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(Info),
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/auth/login`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(Info),
+      credentials: "include",
+    });
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Failed to log in");
@@ -45,18 +42,16 @@ export const login = async (Info) => {
     throw error;
   }
 };
+
 export const PersonInfo = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/users/me",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -73,14 +68,11 @@ export const PersonInfo = async () => {
 
 export const AddFood = async (formData) => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/foods",
-      {
-        method: "POST",
-        body: formData, // Send formData directly
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/foods`, {
+      method: "POST",
+      body: formData, // Send formData directly
+      credentials: "include",
+    });
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -97,16 +89,13 @@ export const AddFood = async (formData) => {
 
 export const getFood = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/foods",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/foods`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Failed to get all food");
@@ -117,26 +106,20 @@ export const getFood = async () => {
     throw error;
   }
 };
+
 export const orderFood = async (arr) => {
-  const url = "https://efood-backend-zv00.onrender.com/api/orders";
-
   try {
-    // Wrapping `arr` into the required structure
-    const payload = {
-      orderItems: arr, // Assuming `arr` is the list of order items
-    };
-
-    const response = await fetch(url, {
+    const payload = { orderItems: arr };
+    const response = await fetch(`${BACKEND_URL}/api/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload), // Convert object to JSON string
+      body: JSON.stringify(payload),
       credentials: "include",
     });
 
     if (!response.ok) {
-      // Handle HTTP errors
       const errorData = await response.json();
       throw new Error(errorData.message || "Something went wrong");
     }
@@ -152,16 +135,13 @@ export const orderFood = async (arr) => {
 
 export const orderedItems = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/orders/new",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/orders/new`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Can't fetch orderd Item");
@@ -173,18 +153,16 @@ export const orderedItems = async () => {
     throw error;
   }
 };
+
 export const myorder = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/orders",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/orders`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || "Can't fetch orderd Item");
@@ -197,10 +175,11 @@ export const myorder = async () => {
     throw error;
   }
 };
+
 export const changeStatus = async ({ id, status }) => {
   try {
     const response = await fetch(
-      `https://efood-backend-zv00.onrender.com/api/orders/status/${id}?status=${status}`,
+      `${BACKEND_URL}/api/orders/status/${id}?status=${status}`,
       {
         method: "PUT",
         credentials: "include",
@@ -221,12 +200,9 @@ export const changeStatus = async ({ id, status }) => {
 
 export const getItemById = async (id) => {
   try {
-    const response = await fetch(
-      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
-      {
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/foods/${id}`, {
+      credentials: "include",
+    });
     if (!response.ok) {
       throw new Error(`Failed to get: ${response.statusText}`);
     }
@@ -236,71 +212,44 @@ export const getItemById = async (id) => {
     console.error("Error Getting Item:", error);
   }
 };
-// export const updateItem = async (id, Info) => {
-//   console.log(id, Info);
-//   try {
-//     const response = await fetch(
-//       `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
-//       {
-//         headers: {
-//           "Content-Type": "application/json",
-//           method: "PUT",
-//           body: JSON.stringify({ Info }),
-//           credentials: "includes",
-//         },
-//       }
-//     );
-//     if (!response.ok) {
-//       throw new Error(`Failed to update: ${response.statusText}`);
-//     }
-//     const data = await response.json();
-//     return data.message;
-//   } catch (error) {
-//     console.error("Error Updating Item:", error);
-//   }
-// };
+
 export const updateItem = async (id, info) => {
   console.log(id, info);
   try {
-    const response = await fetch(
-      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
-      {
-        method: "PUT", // Correct placement of method
-        headers: {
-          "Content-Type": "application/json", // Correct header key
-        },
-        body: JSON.stringify(info), // Correctly stringify `info` directly
-        credentials: "include", // Correct credentials value
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/foods/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(info),
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to update: ${response.statusText}`);
     }
 
     const data = await response.json();
-    return data.message; // Assuming the response contains a `message` field
+    return data.message;
   } catch (error) {
     console.error("Error Updating Item:", error);
   }
 };
+
 export const deleteItem = async (id) => {
   console.log(`Deleting item with ID: ${id}`);
   try {
-    const response = await fetch(
-      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
-      {
-        method: "DELETE", // Use DELETE method
-        credentials: "include", // Include credentials (cookies, authorization headers, etc.)
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/foods/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to delete: ${response.statusText}`);
     }
 
-    const data = await response.json(); // Assuming the response contains a message
-    return data.message; // Return a success message or any relevant response
+    const data = await response.json();
+    return data.message;
   } catch (error) {
     console.error("Error Deleting Item:", error);
   }
@@ -308,16 +257,13 @@ export const deleteItem = async (id) => {
 
 export const logout = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/users/logout",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "DELETE",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/users/logout`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+      credentials: "include",
+    });
     if (!response.ok) {
       throw new Error("Failed to Logout");
     }
@@ -330,16 +276,13 @@ export const logout = async () => {
 
 export const newOrder = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/orders/new",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/orders/new`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch numebr of order");
     }
@@ -349,18 +292,16 @@ export const newOrder = async () => {
     console.error("Error fetching numebr of order:", error);
   }
 };
+
 export const dailyOrder = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/orders/daily",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/orders/daily`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch numebr of order");
     }
@@ -370,18 +311,16 @@ export const dailyOrder = async () => {
     console.error("Error fetching numebr of order:", error);
   }
 };
+
 export const weeklyOrder = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/orders/weekly",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/orders/weekly`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch numebr of order");
     }
@@ -391,18 +330,16 @@ export const weeklyOrder = async () => {
     console.error("Error fetching numebr of order:", error);
   }
 };
+
 export const monthlyOrder = async () => {
   try {
-    const response = await fetch(
-      "https://efood-backend-zv00.onrender.com/api/orders/monthly",
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/orders/monthly`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "GET",
+      credentials: "include",
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch numebr of order");
     }
@@ -416,24 +353,21 @@ export const monthlyOrder = async () => {
 export const updateAvailability = async (id, value) => {
   console.log(`Updating availability for ID: ${id}, Current Value: ${value}`);
   try {
-    const response = await fetch(
-      `https://efood-backend-zv00.onrender.com/api/foods/${id}`,
-      {
-        method: "PUT", // Use PUT method
-        headers: {
-          "Content-Type": "application/json", // Set content type to JSON
-        },
-        body: JSON.stringify({ isAvailable: !value }), // Negate the input value
-        credentials: "include", // Include credentials (cookies, authorization headers, etc.)
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/foods/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ isAvailable: !value }),
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error(`Failed to update availability: ${response.statusText}`);
     }
 
-    const data = await response.json(); // Parse the JSON response
-    return data.message; // Assuming the response contains a `message` field
+    const data = await response.json();
+    return data.message;
   } catch (error) {
     console.error("Error Updating Availability:", error);
   }

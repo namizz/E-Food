@@ -38,7 +38,7 @@ const Image = ({ url, setImage, setURL }) => {
         </div>
       ) : (
         <div className="  w-40 h-cardH absolute">
-          <img src={url} />
+          <img src={url} alt="imag/>
         </div>
       )}
       <input

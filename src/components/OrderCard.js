@@ -112,10 +112,12 @@ const OrderStatus = ({ id, initialStatus, role }) => {
   );
 };
 
+const BACKEND_URL = process.env.REACT_APP_BASE_URL;
+
 const changeStatus = async ({ id, status }) => {
   try {
     const response = await fetch(
-      `https://efood-backend-zv00.onrender.com/api/orders/status/${id}?status=${status}`,
+      `${BACKEND_URL}/api/orders/status/${id}?status=${status}`,
       {
         method: "PUT",
         credentials: "include",

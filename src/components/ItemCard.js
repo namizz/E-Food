@@ -2,13 +2,24 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { deleteItem } from "../api/API";
 import { updateAvailability } from "../api/API";
-const Name = ({ name, quantity, role }) => {
+const Name = ({ name, quantity, role, price }) => {
   return (
-    <div className="flex bg-gradient-to-br from-[#ffae6d] to-[#f87f1c] p-1 text-white text-h3 px-5 font-semibold">
-      {name || "Special Pizza"}
-      {role === "ROLE_ADMIN" ? (
-        <span className="text-h5 text-[#139219b4]"> {`(${quantity})`} </span>
-      ) : null}
+    <div className="flex justify-between items-center bg-gradient-to-br from-[#ffae6d] to-[#f87f1c] py-2  md:py-1 pl-3 md:pl-5 text-white text-base md:text-h3  font-semibold">
+      <div className="flex items-center gap-1 truncate p-2  md:p-1 px-3 md:px-5">
+        <span className="truncate">{name || "Special Pizza"}</span>
+        {role === "ROLE_ADMIN" && (
+          <span className="text-xs md:text-h5 text-[#139219b4] whitespace-nowrap">
+            {`(${quantity})`}
+          </span>
+        )}
+      </div>
+
+      <div className="bg-white bg-opacity-70 text-sm md:text-h4 font-bold text-[#4b49be] p-1 md:p-1 rounded-l-2xl pl-2 md:pl-3">
+        <p className="flex items-center gap-1">
+          <span>{price || "888"}</span>
+          <span className="text-xs md:text-h4">ETB</span>
+        </p>
+      </div>
     </div>
   );
 };
@@ -26,16 +37,7 @@ const Image = ({ image }) => {
     </div>
   );
 };
-const Price = ({ price }) => {
-  return (
-    <div className="relative bottom-price right-[-70%] bg-white bg-opacity-70 text-h4 font-bold text-[#4b49be] p-1 rounded-l-2xl pl-3">
-      <p>
-        {price || "888"}
-        <span className="text-h5">ETB</span>
-      </p>
-    </div>
-  );
-};
+
 const Desciption = ({ description }) => {
   return (
     <div className="text-h5 text-[#33174C] font-medium px-4 overflow-hidden overflow-ellipsis whitespace-nowrap">
@@ -102,39 +104,52 @@ const Available = ({ id, available }) => {
 
 const EditButton = ({ id, setEdit }) => {
   const handleDelete = async (e) => {
-    e.stopPropagation(); // Prevent event from bubbling up
+    e.stopPropagation();
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this item?"
     );
-
     if (confirmDelete) {
       try {
-        const result = await deleteItem(id); // Call the delete function with the item ID
-        console.log(result); // Log success message or handle it accordingly
-        window.location.reload(); // Reload the page after deletion
+        const result = await deleteItem(id);
+        console.log(result);
+        window.location.reload();
       } catch (error) {
-        console.error("Error deleting item:", error); // Handle any errors that occur
+        console.error("Error deleting item:", error);
       }
     }
   };
+
   return (
-    <div>
-      <div
-        className="w-6 h-6 absolute top-1 right-[16%]"
+    <div className="absolute top-2 right-2 md:right-3 flex gap-1 md:gap-2 z-10">
+      {/* Delete Button */}
+      <button
         onClick={handleDelete}
+        className="w-7 h-7 md:w-8 md:h-8 rounded-full p-1 hover:bg-red-200 transition-shadow shadow-sm"
+        aria-label="Delete item"
       >
-        <img src="https://img.icons8.com/?size=48&id=w2fdYXQKgx1b&format=png" />
-      </div>
-      <div
-        className="w-8 h-8 absolute right-[5%]"
+        <img
+          src="https://img.icons8.com/?size=48&id=w2fdYXQKgx1b&format=png"
+          alt="delete"
+          className="w-full h-full"
+        />
+      </button>
+
+      {/* Edit Button */}
+      <button
         onClick={(e) => {
           e.stopPropagation();
-          console.log("id print to make edit mode on", id);
+          console.log("Edit mode for ID:", id);
           setEdit(id);
         }}
+        className="w-7 h-7 md:w-8 md:h-8  rounded-full p-1 hover:bg-blue-200 transition-shadow shadow-sm"
+        aria-label="Edit item"
       >
-        <img src="https://img.icons8.com/?size=80&id=95043&format=png" />
-      </div>
+        <img
+          src="https://img.icons8.com/?size=80&id=95043&format=png"
+          alt="edit"
+          className="w-full h-full"
+        />
+      </button>
     </div>
   );
 };
@@ -155,14 +170,19 @@ const Item = ({ ...props }) => {
       ) : null}
       <Image image={props.src} />
       <div className="relative">
-        <Name name={props.name} quantity={props.quantity} role={role} />
+        <Name
+          name={props.name}
+          quantity={props.quantity}
+          role={role}
+          price={props.price}
+        />
         <Desciption description={props.description} />
         {role !== "ROLE_ADMIN" ? (
           <Order user={user} setOrder={setOrder} props={props} />
         ) : (
           <Available id={props.id} available={props.isAvailable} />
         )}
-        <Price price={props.price} />
+        {/* <Price price={props.price} /> */}
       </div>
     </div>
   );

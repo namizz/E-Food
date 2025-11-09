@@ -27,7 +27,7 @@ const Items = ({
 }) => {
   return (
     <div
-      className={`${selected ? "w-[55%]" : "w-[75%] mx-auto"} 
+      className={`${selected ? "w-[85%]" : "w-[90%] mx-auto"} 
       `}
     >
       <p className="border-[4px] border-[#FF8E32] text-h2 text-[#FF7300] font-semibold inline-block px-item rounded-t-3xl">
@@ -48,24 +48,45 @@ const Items = ({
 
 const Body = ({ user, setSelected, selected, setOrder, editmode, setEdit }) => {
   return (
-    <div
-      className={`flex mx-auto justify-center ${
-        editmode !== 0 ? "blur-sm" : null
-      }`}
-    >
-      <Items
-        setSelected={setSelected}
-        selected={selected}
-        setOrder={setOrder}
-        user={user}
-        setEdit={setEdit}
-        editmode={editmode}
-      />
-      {selected ? (
-        <div className="w-[25%]">
-          <DisplayItem user={user} props={selected} />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Mobile: DisplayItem on top, Items below */}
+      <div className="md:hidden">
+        {/* {selected && (
+          <div className="mb-6 mx-5">
+            <DisplayItem user={user} props={selected} />
+          </div>
+        )} */}
+        <div className={`${editmode !== 0 ? "blur-sm" : ""}`}>
+          <Items
+            setSelected={setSelected}
+            selected={selected}
+            setOrder={setOrder}
+            user={user}
+            setEdit={setEdit}
+            editmode={editmode}
+          />
         </div>
-      ) : null}
+      </div>
+
+      {/* Desktop: Side-by-side */}
+      <div className="hidden md:flex justify-center ">
+        <div className={`flex-1 ${editmode !== 0 ? "blur-sm" : ""} `}>
+          <Items
+            setSelected={setSelected}
+            selected={selected}
+            setOrder={setOrder}
+            user={user}
+            setEdit={setEdit}
+            editmode={editmode}
+          />
+        </div>
+
+        {selected && (
+          <div className="max-w-sm lg:max-w-md">
+            <DisplayItem user={user} props={selected} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
