@@ -19,7 +19,7 @@ const Notifications = ({ notifications, setNotifications }) => {
         JSON.stringify(updatedNotifications)
       );
     });
-  }, []); // Run only once when the component mounts
+  }, [notifications, setNotifications]); // Run only once when the component mounts
 
   const handleResponse = (response, index) => {
     console.log("User response:", response);

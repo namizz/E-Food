@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import connectWebSocket from "../../socket/OrderSocket";
 import NotificationCard from "../NotificationCard";
 
@@ -23,7 +23,7 @@ const OrderNotification = ({ OrdNotify, setOrdNotify, user }) => {
     const storedNotifications =
       JSON.parse(localStorage.getItem("Onotifications")) || [];
     setOrdNotify(storedNotifications);
-  }, [user]);
+  }, [user, OrdNotify, setOrdNotify]);
 
   const handleResponse = (response, index) => {
     console.log("User response:", response);

@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import NewItem from "../components/containers/NewItem";
 import { useUser } from "../content/UserContent"; // Assuming this is your user context or state management
-import { getFood, PersonInfo } from "../api/API"; // Assuming this is your API call
+import { PersonInfo } from "../api/API"; // Assuming this is your API call
 import ItemsBox from "../components/containers/ItemBox";
 import DisplayItem from "../components/containers/DisplayItem";
 import CartBox from "../components/containers/CartBox";
@@ -95,7 +95,7 @@ const Home = ({ addDisplay, setDisplay }) => {
   const { user, setUser } = useUser();
   useEffect(() => {
     console.log("user", user);
-  }, [setUser]);
+  }, [user, setUser]);
   const [selected, setSelected] = useState(null); // About selected element
   const [newOrder, setOrder] = useState(null);
   const [notifications, setNotifications] = useState([]); //notifications

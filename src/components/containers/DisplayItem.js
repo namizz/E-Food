@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { useUser } from "../../content/UserContent";
 import { deleteItem, updateAvailability } from "../../api/API"; // Assuming these API functions exist
 
-const Name_Price = ({ name, price }) => {
+const NamePrice = ({ name, price }) => {
   return (
     <div className="bg-gradient-to-r from-[#ffd000] to-[#ffdf50] p-2 px-8 text-black text-h3 font-bold flex justify-between">
       <div>
@@ -153,7 +153,7 @@ const DisplayItem = ({ ...props }) => {
       {role === "ROLE_ADMIN" && <EditButton id={props.id} setEdit={setEdit} />}
       <Image image={props.src} />
       <div className="relative">
-        <Name_Price name={props.name} price={props.price} />
+        <NamePrice name={props.name} price={props.price} />
         <Description description={props.description} />
         <div className="mt-4 px-4">
           {role !== "ROLE_ADMIN" ? (

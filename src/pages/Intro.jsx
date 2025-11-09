@@ -75,6 +75,7 @@ const Nav = () => {
         <img
           src="https://img.icons8.com/?size=48&id=t0CwA6GDizrl&format=png"
           className="mx-2"
+          alt="nav"
         />
         E-Food
       </p>
@@ -89,6 +90,7 @@ const FirstPanle = () => {
       <img
         className="absolute w-full h-4/5 -z-20 opacity-60"
         src="https://i.pinimg.com/736x/1b/d8/d6/1bd8d6906906e291a1dbb85d036bcca3.jpg"
+        alt="first panel"
       />
       <div className="text-white text-fluid text-center font-bold">
         Enjoy Your Food

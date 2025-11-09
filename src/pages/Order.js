@@ -13,23 +13,26 @@ const CurrentOrder = ({ user, ordered }) => {
         <p>Current Orders</p>
       </div>
 
-      {ordered.length > 0
-        ? ordered.map((o) => {
-            if (o.status !== "Delivered") {
-              const compositeKey = `${o.id}-${o.status}-${o.totalPrice}`; // Create a composite key
-              return (
-                <OrderCard
-                  key={compositeKey}
-                  id={o.id}
-                  items={o.items}
-                  status={o.status}
-                  price={o.totalPrice}
-                  role={user.role}
-                />
-              );
-            }
+      {(() => {
+        const activeOrders = ordered.filter((o) => o.status !== "Delivered");
+        return activeOrders.length > 0 ? (
+          activeOrders.map((o) => {
+            const compositeKey = `${o.id}-${o.status}-${o.totalPrice}`;
+            return (
+              <OrderCard
+                key={compositeKey}
+                id={o.id}
+                items={o.items}
+                status={o.status}
+                price={o.totalPrice}
+                role={user?.role}
+              />
+            );
           })
-        : "There is No Current Order "}
+        ) : (
+          <p>There is No Current Order</p>
+        );
+      })()}
     </>
   );
 };
@@ -49,7 +52,7 @@ const Order = ({ addDisplay, changeDisplay }) => {
     };
 
     fetchData();
-  }, []);
+  }, [setUser]);
 
   useEffect(() => {
     // Fetch orders based on user role after user info is fetched

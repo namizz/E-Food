@@ -1,8 +1,8 @@
 import Input from "../components/LogInInputs";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/API";
-import { PersonInfo } from "../api/API";
+// import { PersonInfo } from "../api/API";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const LoginForm = () => {
   });
   const [load, setLoad] = useState(false);
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
